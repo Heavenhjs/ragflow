@@ -237,6 +237,7 @@ def is_float_regex(value):
 def chunk_id(chunk):
     return xxhash.xxh64((chunk["content_with_weight"] + chunk["kb_id"]).encode("utf-8")).hexdigest()
 
+<<<<<<< HEAD
 def get_entity_cache(tenant_id, kb_id, ent_name) -> str | list[str]:
     hasher = xxhash.xxh64()
     hasher.update(str(tenant_id).encode("utf-8"))
@@ -264,6 +265,10 @@ def get_entity(tenant_id, kb_id, ent_name):
     cache = get_entity_cache(tenant_id, kb_id, ent_name)
     if cache:
         return cache
+=======
+
+def get_entity(tenant_id, kb_id, ent_name):
+>>>>>>> be730d39 (init commit)
     conds = {
         "fields": ["content_with_weight"],
         "entity_kwd": ent_name,
@@ -275,7 +280,10 @@ def get_entity(tenant_id, kb_id, ent_name):
     for id in es_res.ids:
         try:
             if isinstance(ent_name, str):
+<<<<<<< HEAD
                 set_entity_cache(tenant_id, kb_id, ent_name, es_res.field[id]["content_with_weight"])
+=======
+>>>>>>> be730d39 (init commit)
                 return json.loads(es_res.field[id]["content_with_weight"])
             res.append(json.loads(es_res.field[id]["content_with_weight"]))
         except Exception:
@@ -298,7 +306,10 @@ def set_entity(tenant_id, kb_id, embd_mdl, ent_name, meta):
         "available_int": 0
     }
     chunk["content_sm_ltks"] = rag_tokenizer.fine_grained_tokenize(chunk["content_ltks"])
+<<<<<<< HEAD
     set_entity_cache(tenant_id, kb_id, ent_name, chunk["content_with_weight"])
+=======
+>>>>>>> be730d39 (init commit)
     res = settings.retrievaler.search({"entity_kwd": ent_name, "size": 1, "fields": []},
                                       search.index_name(tenant_id), [kb_id])
     if res.ids:

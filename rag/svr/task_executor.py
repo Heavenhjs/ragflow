@@ -24,6 +24,13 @@ from graphrag.general.index import run_graphrag
 from graphrag.utils import get_llm_cache, set_llm_cache, get_tags_from_cache, set_tags_to_cache
 from rag.prompts import keyword_extraction, question_proposal, content_tagging
 
+<<<<<<< HEAD
+=======
+CONSUMER_NO = "0" if len(sys.argv) < 2 else sys.argv[1]
+CONSUMER_NAME = "task_executor_" + CONSUMER_NO
+initRootLogger(CONSUMER_NAME)
+
+>>>>>>> be730d39 (init commit)
 import logging
 import os
 from datetime import datetime
@@ -39,7 +46,10 @@ import tracemalloc
 import signal
 import trio
 import exceptiongroup
+<<<<<<< HEAD
 import faulthandler
+=======
+>>>>>>> be730d39 (init commit)
 
 import numpy as np
 from peewee import DoesNotExist
@@ -56,7 +66,11 @@ from rag.app import laws, paper, presentation, manual, qa, table, book, resume, 
     email, tag
 from rag.nlp import search, rag_tokenizer
 from rag.raptor import RecursiveAbstractiveProcessing4TreeOrganizedRetrieval as Raptor
+<<<<<<< HEAD
 from rag.settings import DOC_MAXIMUM_SIZE, SVR_CONSUMER_GROUP_NAME, get_svr_queue_name, get_svr_queue_names, print_rag_settings, TAG_FLD, PAGERANK_FLD
+=======
+from rag.settings import DOC_MAXIMUM_SIZE, SVR_QUEUE_NAME, print_rag_settings, TAG_FLD, PAGERANK_FLD
+>>>>>>> be730d39 (init commit)
 from rag.utils import num_tokens_from_string
 from rag.utils.redis_conn import REDIS_CONN
 from rag.utils.storage_factory import STORAGE_IMPL
@@ -84,9 +98,13 @@ FACTORY = {
 }
 
 UNACKED_ITERATOR = None
+<<<<<<< HEAD
 
 CONSUMER_NO = "0" if len(sys.argv) < 2 else sys.argv[1]
 CONSUMER_NAME = "task_executor_" + CONSUMER_NO
+=======
+CONSUMER_NAME = "task_consumer_" + CONSUMER_NO
+>>>>>>> be730d39 (init commit)
 BOOT_AT = datetime.now().astimezone().isoformat(timespec="milliseconds")
 PENDING_TASKS = 0
 LAG_TASKS = 0
@@ -100,7 +118,10 @@ MAX_CONCURRENT_CHUNK_BUILDERS = int(os.environ.get('MAX_CONCURRENT_CHUNK_BUILDER
 task_limiter = trio.CapacityLimiter(MAX_CONCURRENT_TASKS)
 chunk_limiter = trio.CapacityLimiter(MAX_CONCURRENT_CHUNK_BUILDERS)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> be730d39 (init commit)
 # SIGUSR1 handler: start tracemalloc and take snapshot
 def start_tracemalloc_and_snapshot(signum, frame):
     if not tracemalloc.is_tracing():
@@ -139,6 +160,7 @@ class TaskCanceledException(Exception):
 
 
 def set_progress(task_id, from_page=0, to_page=-1, prog=None, msg="Processing..."):
+<<<<<<< HEAD
     try:
         if prog is not None and prog < 0:
             msg = "[ERROR]" + msg
@@ -168,10 +190,37 @@ def set_progress(task_id, from_page=0, to_page=-1, prog=None, msg="Processing...
         logging.warning(f"set_progress({task_id}) got exception DoesNotExist")
     except Exception:
         logging.exception(f"set_progress({task_id}), progress: {prog}, progress_msg: {msg}, got exception")
+=======
+    if prog is not None and prog < 0:
+        msg = "[ERROR]" + msg
+    cancel = TaskService.do_cancel(task_id)
+
+    if cancel:
+        msg += " [Canceled]"
+        prog = -1
+
+    if to_page > 0:
+        if msg:
+            if from_page < to_page:
+                msg = f"Page({from_page + 1}~{to_page + 1}): " + msg
+    if msg:
+        msg = datetime.now().strftime("%H:%M:%S") + " " + msg
+    d = {"progress_msg": msg}
+    if prog is not None:
+        d["progress"] = prog
+
+    logging.info(f"set_progress({task_id}), progress: {prog}, progress_msg: {msg}")
+    TaskService.update_progress(task_id, d)
+
+    close_connection()
+    if cancel:
+        raise TaskCanceledException(msg)
+>>>>>>> be730d39 (init commit)
 
 async def collect():
     global CONSUMER_NAME, DONE_TASKS, FAILED_TASKS
     global UNACKED_ITERATOR
+<<<<<<< HEAD
     svr_queue_names = get_svr_queue_names()
     try:
         if not UNACKED_ITERATOR:
@@ -183,12 +232,27 @@ async def collect():
                 redis_msg = REDIS_CONN.queue_consumer(svr_queue_name, SVR_CONSUMER_GROUP_NAME, CONSUMER_NAME)
                 if redis_msg:
                     break
+=======
+    try:
+        if not UNACKED_ITERATOR:
+            UNACKED_ITERATOR = REDIS_CONN.get_unacked_iterator(SVR_QUEUE_NAME, "rag_flow_svr_task_broker", CONSUMER_NAME)
+        try:
+            redis_msg = next(UNACKED_ITERATOR)
+        except StopIteration:
+            redis_msg = REDIS_CONN.queue_consumer(SVR_QUEUE_NAME, "rag_flow_svr_task_broker", CONSUMER_NAME)
+        if not redis_msg:
+            await trio.sleep(1)
+            return None, None
+>>>>>>> be730d39 (init commit)
     except Exception:
         logging.exception("collect got exception")
         return None, None
 
+<<<<<<< HEAD
     if not redis_msg:
         return None, None
+=======
+>>>>>>> be730d39 (init commit)
     msg = redis_msg.get_message()
     if not msg:
         logging.error(f"collect got empty message of {redis_msg.get_msg_id()}")
@@ -619,7 +683,11 @@ async def report_status():
     while True:
         try:
             now = datetime.now()
+<<<<<<< HEAD
             group_info = REDIS_CONN.queue_info(get_svr_queue_name(0), SVR_CONSUMER_GROUP_NAME)
+=======
+            group_info = REDIS_CONN.queue_info(SVR_QUEUE_NAME, "rag_flow_svr_task_broker")
+>>>>>>> be730d39 (init commit)
             if group_info is not None:
                 PENDING_TASKS = int(group_info.get("pending", 0))
                 LAG_TASKS = int(group_info.get("lag", 0))
@@ -672,6 +740,9 @@ async def main():
     logging.error("BUG!!! You should not reach here!!!")
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     faulthandler.enable()
     initRootLogger(CONSUMER_NAME)
+=======
+>>>>>>> be730d39 (init commit)
     trio.run(main)

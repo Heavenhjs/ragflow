@@ -235,7 +235,11 @@ class Canvas:
             pid = self.components[cid]["parent_id"]
             o, _ = self.components[cid]["obj"].output(allow_partial=False)
             oo, _ = self.components[pid]["obj"].output(allow_partial=False)
+<<<<<<< HEAD
             self.components[pid]["obj"].set(pd.concat([oo, o], ignore_index=True).dropna())
+=======
+            self.components[pid]["obj"].set(pd.concat([oo, o], ignore_index=True))
+>>>>>>> be730d39 (init commit)
             downstream = [pid]
 
         for m in prepare2run(downstream):

@@ -531,6 +531,7 @@ Failure:
 
 ---
 
+<<<<<<< HEAD
 ## Error Codes
 
 ---
@@ -551,6 +552,8 @@ Failure:
 
 ---
 
+=======
+>>>>>>> be730d39 (init commit)
 ## FILE MANAGEMENT WITHIN DATASET
 
 ---

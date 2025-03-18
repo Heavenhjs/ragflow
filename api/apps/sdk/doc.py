@@ -67,7 +67,10 @@ class Chunk(BaseModel):
                 raise ValueError("Each sublist in positions must have a length of 5")
         return value
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> be730d39 (init commit)
 @manager.route("/datasets/<dataset_id>/documents", methods=["POST"])  # noqa: F821
 @token_required
 def upload(dataset_id, tenant_id):
@@ -137,10 +140,13 @@ def upload(dataset_id, tenant_id):
             return get_result(
                 message="No file selected!", code=settings.RetCode.ARGUMENT_ERROR
             )
+<<<<<<< HEAD
         if len(file_obj.filename.encode("utf-8")) >= 128:
             return get_result(
                 message="File name should be less than 128 bytes.", code=settings.RetCode.ARGUMENT_ERROR
             )
+=======
+>>>>>>> be730d39 (init commit)
     '''
     # total size
     total_size = 0
@@ -251,11 +257,14 @@ def update_doc(tenant_id, dataset_id, document_id):
         DocumentService.update_meta_fields(document_id, req["meta_fields"])
 
     if "name" in req and req["name"] != doc.name:
+<<<<<<< HEAD
         if len(req["name"].encode("utf-8")) >= 128:
             return get_result(
                 message="The name should be less than 128 bytes.",
                 code=settings.RetCode.ARGUMENT_ERROR,
             )
+=======
+>>>>>>> be730d39 (init commit)
         if (
                 pathlib.Path(req["name"].lower()).suffix
                 != pathlib.Path(doc.name.lower()).suffix
@@ -373,10 +382,13 @@ def download(tenant_id, dataset_id, document_id):
         schema:
           type: object
     """
+<<<<<<< HEAD
     if not document_id:
         return get_error_data_result(
             message="Specify document_id please."
         )
+=======
+>>>>>>> be730d39 (init commit)
     if not KnowledgebaseService.query(id=dataset_id, tenant_id=tenant_id):
         return get_error_data_result(message=f"You do not own the dataset {dataset_id}.")
     doc = DocumentService.query(kb_id=dataset_id, id=document_id)
@@ -694,7 +706,11 @@ def parse(tenant_id, dataset_id):
         doc = doc.to_dict()
         doc["tenant_id"] = tenant_id
         bucket, name = File2DocumentService.get_storage_address(doc_id=doc["id"])
+<<<<<<< HEAD
         queue_tasks(doc, bucket, name, 0)
+=======
+        queue_tasks(doc, bucket, name)
+>>>>>>> be730d39 (init commit)
     return get_result()
 
 

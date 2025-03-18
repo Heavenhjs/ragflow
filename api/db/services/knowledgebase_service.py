@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+<<<<<<< HEAD
 from datetime import datetime
 
 from peewee import fn
@@ -40,10 +41,20 @@ class KnowledgebaseService(CommonService):
     Attributes:
         model: The Knowledgebase model class for database operations.
     """
+=======
+from api.db import StatusEnum, TenantPermission
+from api.db.db_models import Knowledgebase, DB, Tenant, User, UserTenant,Document
+from api.db.services.common_service import CommonService
+from peewee import fn
+
+
+class KnowledgebaseService(CommonService):
+>>>>>>> be730d39 (init commit)
     model = Knowledgebase
 
     @classmethod
     @DB.connection_context()
+<<<<<<< HEAD
     def accessible4deletion(cls, kb_id, user_id):
         """Check if a knowledge base can be deleted by a specific user.
 
@@ -122,6 +133,13 @@ class KnowledgebaseService(CommonService):
             cls.model.id.in_(kb_ids)
         )
         doc_ids = list(doc_ids.dicts())
+=======
+    def list_documents_by_ids(cls,kb_ids):
+        doc_ids=cls.model.select(Document.id.alias("document_id")).join(Document,on=(cls.model.id == Document.kb_id)).where(
+            cls.model.id.in_(kb_ids)
+        )
+        doc_ids =list(doc_ids.dicts())
+>>>>>>> be730d39 (init commit)
         doc_ids = [doc["document_id"] for doc in doc_ids]
         return doc_ids
 
@@ -132,6 +150,7 @@ class KnowledgebaseService(CommonService):
                           orderby, desc, keywords,
                           parser_id=None
                           ):
+<<<<<<< HEAD
         # Get knowledge bases by tenant IDs with pagination and filtering
         # Args:
         #     joined_tenant_ids: List of tenant IDs
@@ -144,6 +163,8 @@ class KnowledgebaseService(CommonService):
         #     parser_id: Optional parser ID filter
         # Returns:
         #     Tuple of (knowledge_base_list, total_count)
+=======
+>>>>>>> be730d39 (init commit)
         fields = [
             cls.model.id,
             cls.model.avatar,
@@ -191,11 +212,14 @@ class KnowledgebaseService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_kb_ids(cls, tenant_id):
+<<<<<<< HEAD
         # Get all knowledge base IDs for a tenant
         # Args:
         #     tenant_id: Tenant ID
         # Returns:
         #     List of knowledge base IDs
+=======
+>>>>>>> be730d39 (init commit)
         fields = [
             cls.model.id,
         ]
@@ -206,6 +230,7 @@ class KnowledgebaseService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_detail(cls, kb_id):
+<<<<<<< HEAD
         # Get detailed information about a knowledge base
         # Args:
         #     kb_id: Knowledge base ID
@@ -213,6 +238,11 @@ class KnowledgebaseService(CommonService):
         #     Dictionary containing knowledge base details
         fields = [
             cls.model.id,
+=======
+        fields = [
+            cls.model.id,
+            # Tenant.embd_id,
+>>>>>>> be730d39 (init commit)
             cls.model.embd_id,
             cls.model.avatar,
             cls.model.name,
@@ -226,28 +256,42 @@ class KnowledgebaseService(CommonService):
             cls.model.parser_config,
             cls.model.pagerank]
         kbs = cls.model.select(*fields).join(Tenant, on=(
+<<<<<<< HEAD
             (Tenant.id == cls.model.tenant_id) & (Tenant.status == StatusEnum.VALID.value))).where(
+=======
+                (Tenant.id == cls.model.tenant_id) & (Tenant.status == StatusEnum.VALID.value))).where(
+>>>>>>> be730d39 (init commit)
             (cls.model.id == kb_id),
             (cls.model.status == StatusEnum.VALID.value)
         )
         if not kbs:
             return
         d = kbs[0].to_dict()
+<<<<<<< HEAD
+=======
+        # d["embd_id"] = kbs[0].tenant.embd_id
+>>>>>>> be730d39 (init commit)
         return d
 
     @classmethod
     @DB.connection_context()
     def update_parser_config(cls, id, config):
+<<<<<<< HEAD
         # Update parser configuration for a knowledge base
         # Args:
         #     id: Knowledge base ID
         #     config: New parser configuration
+=======
+>>>>>>> be730d39 (init commit)
         e, m = cls.get_by_id(id)
         if not e:
             raise LookupError(f"knowledgebase({id}) not found.")
 
         def dfs_update(old, new):
+<<<<<<< HEAD
             # Deep update of nested configuration
+=======
+>>>>>>> be730d39 (init commit)
             for k, v in new.items():
                 if k not in old:
                     old[k] = v
@@ -267,11 +311,14 @@ class KnowledgebaseService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_field_map(cls, ids):
+<<<<<<< HEAD
         # Get field mappings for knowledge bases
         # Args:
         #     ids: List of knowledge base IDs
         # Returns:
         #     Dictionary of field mappings
+=======
+>>>>>>> be730d39 (init commit)
         conf = {}
         for k in cls.get_by_ids(ids):
             if k.parser_config and "field_map" in k.parser_config:
@@ -281,12 +328,15 @@ class KnowledgebaseService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_by_name(cls, kb_name, tenant_id):
+<<<<<<< HEAD
         # Get knowledge base by name and tenant ID
         # Args:
         #     kb_name: Knowledge base name
         #     tenant_id: Tenant ID
         # Returns:
         #     Tuple of (exists, knowledge_base)
+=======
+>>>>>>> be730d39 (init commit)
         kb = cls.model.select().where(
             (cls.model.name == kb_name)
             & (cls.model.tenant_id == tenant_id)
@@ -299,15 +349,19 @@ class KnowledgebaseService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_all_ids(cls):
+<<<<<<< HEAD
         # Get all knowledge base IDs
         # Returns:
         #     List of all knowledge base IDs
+=======
+>>>>>>> be730d39 (init commit)
         return [m["id"] for m in cls.model.select(cls.model.id).dicts()]
 
     @classmethod
     @DB.connection_context()
     def get_list(cls, joined_tenant_ids, user_id,
                  page_number, items_per_page, orderby, desc, id, name):
+<<<<<<< HEAD
         # Get list of knowledge bases with filtering and pagination
         # Args:
         #     joined_tenant_ids: List of tenant IDs
@@ -320,6 +374,8 @@ class KnowledgebaseService(CommonService):
         #     name: Optional name filter
         # Returns:
         #     List of knowledge bases
+=======
+>>>>>>> be730d39 (init commit)
         kbs = cls.model.select()
         if id:
             kbs = kbs.where(cls.model.id == id)
@@ -328,7 +384,11 @@ class KnowledgebaseService(CommonService):
         kbs = kbs.where(
             ((cls.model.tenant_id.in_(joined_tenant_ids) & (cls.model.permission ==
                                                             TenantPermission.TEAM.value)) | (
+<<<<<<< HEAD
                 cls.model.tenant_id == user_id))
+=======
+                     cls.model.tenant_id == user_id))
+>>>>>>> be730d39 (init commit)
             & (cls.model.status == StatusEnum.VALID.value)
         )
         if desc:
@@ -343,6 +403,7 @@ class KnowledgebaseService(CommonService):
     @classmethod
     @DB.connection_context()
     def accessible(cls, kb_id, user_id):
+<<<<<<< HEAD
         # Check if a knowledge base is accessible by a user
         # Args:
         #     kb_id: Knowledge base ID
@@ -352,6 +413,11 @@ class KnowledgebaseService(CommonService):
         docs = cls.model.select(
             cls.model.id).join(UserTenant, on=(UserTenant.tenant_id == Knowledgebase.tenant_id)
                                ).where(cls.model.id == kb_id, UserTenant.user_id == user_id).paginate(0, 1)
+=======
+        docs = cls.model.select(
+            cls.model.id).join(UserTenant, on=(UserTenant.tenant_id == Knowledgebase.tenant_id)
+            ).where(cls.model.id == kb_id, UserTenant.user_id == user_id).paginate(0, 1)
+>>>>>>> be730d39 (init commit)
         docs = docs.dicts()
         if not docs:
             return False
@@ -360,6 +426,7 @@ class KnowledgebaseService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_kb_by_id(cls, kb_id, user_id):
+<<<<<<< HEAD
         # Get knowledge base by ID and user ID
         # Args:
         #     kb_id: Knowledge base ID
@@ -368,12 +435,17 @@ class KnowledgebaseService(CommonService):
         #     List containing knowledge base information
         kbs = cls.model.select().join(UserTenant, on=(UserTenant.tenant_id == Knowledgebase.tenant_id)
                                       ).where(cls.model.id == kb_id, UserTenant.user_id == user_id).paginate(0, 1)
+=======
+        kbs = cls.model.select().join(UserTenant, on=(UserTenant.tenant_id == Knowledgebase.tenant_id)
+            ).where(cls.model.id == kb_id, UserTenant.user_id == user_id).paginate(0, 1)
+>>>>>>> be730d39 (init commit)
         kbs = kbs.dicts()
         return list(kbs)
 
     @classmethod
     @DB.connection_context()
     def get_kb_by_name(cls, kb_name, user_id):
+<<<<<<< HEAD
         # Get knowledge base by name and user ID
         # Args:
         #     kb_name: Knowledge base name
@@ -382,11 +454,16 @@ class KnowledgebaseService(CommonService):
         #     List containing knowledge base information
         kbs = cls.model.select().join(UserTenant, on=(UserTenant.tenant_id == Knowledgebase.tenant_id)
                                       ).where(cls.model.name == kb_name, UserTenant.user_id == user_id).paginate(0, 1)
+=======
+        kbs = cls.model.select().join(UserTenant, on=(UserTenant.tenant_id == Knowledgebase.tenant_id)
+            ).where(cls.model.name == kb_name, UserTenant.user_id == user_id).paginate(0, 1)
+>>>>>>> be730d39 (init commit)
         kbs = kbs.dicts()
         return list(kbs)
 
     @classmethod
     @DB.connection_context()
+<<<<<<< HEAD
     def atomic_increase_doc_num_by_id(cls, kb_id):
         data = {}
         data["update_time"] = current_timestamp()
@@ -394,3 +471,13 @@ class KnowledgebaseService(CommonService):
         data["doc_num"] = cls.model.doc_num + 1
         num = cls.model.update(data).where(cls.model.id == kb_id).execute()
         return num
+=======
+    def accessible4deletion(cls, kb_id, user_id):
+        docs = cls.model.select(
+            cls.model.id).where(cls.model.id == kb_id, cls.model.created_by == user_id).paginate(0, 1)
+        docs = docs.dicts()
+        if not docs:
+            return False
+        return True
+
+>>>>>>> be730d39 (init commit)

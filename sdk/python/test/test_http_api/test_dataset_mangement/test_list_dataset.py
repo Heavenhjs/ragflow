@@ -62,6 +62,7 @@ class TestDatasetList:
             ({"page": 0, "page_size": 2}, 0, 2, ""),
             ({"page": 2, "page_size": 2}, 0, 2, ""),
             ({"page": 3, "page_size": 2}, 0, 1, ""),
+<<<<<<< HEAD
             ({"page": "3", "page_size": 2}, 0, 1, ""),
             pytest.param(
                 {"page": -1, "page_size": 2},
@@ -69,13 +70,22 @@ class TestDatasetList:
                 0,
                 "1064",
                 marks=pytest.mark.xfail(reason="issues/5851"),
+=======
+            ({"page": "1", "page_size": 2}, 0, 2, ""),
+            pytest.param(
+                {"page": -1, "page_size": 2}, 100, 0, "1064", marks=pytest.mark.xfail
+>>>>>>> be730d39 (init commit)
             ),
             pytest.param(
                 {"page": "a", "page_size": 2},
                 100,
                 0,
                 """ValueError("invalid literal for int() with base 10: \'a\'")""",
+<<<<<<< HEAD
                 marks=pytest.mark.xfail(reason="issues/5851"),
+=======
+                marks=pytest.mark.xfail,
+>>>>>>> be730d39 (init commit)
             ),
         ],
     )
@@ -103,6 +113,7 @@ class TestDatasetList:
             ({"page_size": 1}, 0, 1, ""),
             ({"page_size": 32}, 0, 31, ""),
             ({"page_size": "1"}, 0, 1, ""),
+<<<<<<< HEAD
             pytest.param(
                 {"page_size": -1},
                 100,
@@ -110,12 +121,19 @@ class TestDatasetList:
                 "1064",
                 marks=pytest.mark.xfail(reason="issues/5851"),
             ),
+=======
+            pytest.param({"page_size": -1}, 100, 0, "1064", marks=pytest.mark.xfail),
+>>>>>>> be730d39 (init commit)
             pytest.param(
                 {"page_size": "a"},
                 100,
                 0,
                 """ValueError("invalid literal for int() with base 10: \'a\'")""",
+<<<<<<< HEAD
                 marks=pytest.mark.xfail(reason="issues/5851"),
+=======
+                marks=pytest.mark.xfail,
+>>>>>>> be730d39 (init commit)
             ),
         ],
     )
@@ -141,18 +159,27 @@ class TestDatasetList:
             (
                 {"orderby": None},
                 0,
+<<<<<<< HEAD
                 lambda r: (is_sorted(r["data"], "create_time", True)),
+=======
+                lambda r: (is_sorted(r["data"], "create_time"), True),
+>>>>>>> be730d39 (init commit)
                 "",
             ),
             (
                 {"orderby": "create_time"},
                 0,
+<<<<<<< HEAD
                 lambda r: (is_sorted(r["data"], "create_time", True)),
+=======
+                lambda r: (is_sorted(r["data"], "create_time"), True),
+>>>>>>> be730d39 (init commit)
                 "",
             ),
             (
                 {"orderby": "update_time"},
                 0,
+<<<<<<< HEAD
                 lambda r: (is_sorted(r["data"], "update_time", True)),
                 "",
             ),
@@ -169,6 +196,17 @@ class TestDatasetList:
                 0,
                 "orderby should be create_time or update_time",
                 marks=pytest.mark.xfail(reason="issues/5851"),
+=======
+                lambda r: (is_sorted(r["data"], "update_time"), True),
+                "",
+            ),
+            pytest.param(
+                {"orderby": "a"},
+                100,
+                0,
+                """AttributeError("type object \'Knowledgebase\' has no attribute \'a\'")""",
+                marks=pytest.mark.xfail,
+>>>>>>> be730d39 (init commit)
             ),
         ],
     )
@@ -185,7 +223,11 @@ class TestDatasetList:
         assert res["code"] == expected_code
         if expected_code == 0:
             if callable(assertions):
+<<<<<<< HEAD
                 assert assertions(res)
+=======
+                assert all(assertions(res))
+>>>>>>> be730d39 (init commit)
         else:
             assert res["message"] == expected_message
 
@@ -195,12 +237,17 @@ class TestDatasetList:
             (
                 {"desc": None},
                 0,
+<<<<<<< HEAD
                 lambda r: (is_sorted(r["data"], "create_time", True)),
+=======
+                lambda r: (is_sorted(r["data"], "create_time", True),),
+>>>>>>> be730d39 (init commit)
                 "",
             ),
             (
                 {"desc": "true"},
                 0,
+<<<<<<< HEAD
                 lambda r: (is_sorted(r["data"], "create_time", True)),
                 "",
             ),
@@ -214,11 +261,15 @@ class TestDatasetList:
                 {"desc": True},
                 0,
                 lambda r: (is_sorted(r["data"], "create_time", True)),
+=======
+                lambda r: (is_sorted(r["data"], "create_time", True),),
+>>>>>>> be730d39 (init commit)
                 "",
             ),
             (
                 {"desc": "false"},
                 0,
+<<<<<<< HEAD
                 lambda r: (is_sorted(r["data"], "create_time", False)),
                 "",
             ),
@@ -246,6 +297,29 @@ class TestDatasetList:
                 0,
                 "desc should be true or false",
                 marks=pytest.mark.xfail(reason="issues/5851"),
+=======
+                lambda r: (is_sorted(r["data"], "create_time", False),),
+                "",
+            ),
+            (
+                {"desc": True},
+                0,
+                lambda r: (is_sorted(r["data"], "create_time", True),),
+                "",
+            ),
+            (
+                {"desc": "false", "orderby": "update_time"},
+                0,
+                lambda r: (is_sorted(r["data"], "update_time", False),),
+                "",
+            ),
+            pytest.param(
+                {"desc": "a"},
+                100,
+                0,
+                """AttributeError("type object \'Knowledgebase\' has no attribute \'a\'")""",
+                marks=pytest.mark.xfail,
+>>>>>>> be730d39 (init commit)
             ),
         ],
     )
@@ -259,10 +333,18 @@ class TestDatasetList:
     ):
         create_datasets(get_http_api_auth, 3)
         res = list_dataset(get_http_api_auth, params=params)
+<<<<<<< HEAD
         assert res["code"] == expected_code
         if expected_code == 0:
             if callable(assertions):
                 assert assertions(res)
+=======
+        # print(res)
+        assert res["code"] == expected_code
+        if expected_code == 0:
+            if callable(assertions):
+                assert all(assertions(res))
+>>>>>>> be730d39 (init commit)
         else:
             assert res["message"] == expected_message
 
@@ -270,9 +352,14 @@ class TestDatasetList:
         "params, expected_code, expected_num, expected_message",
         [
             ({"name": None}, 0, 3, ""),
+<<<<<<< HEAD
             ({"name": ""}, 0, 3, ""),
             ({"name": "dataset_1"}, 0, 1, ""),
             ({"name": "unknown"}, 102, 0, "You don't own the dataset unknown"),
+=======
+            ({"name": "dataset_1"}, 0, 1, ""),
+            ({"name": "a"}, 102, 0, "You don't own the dataset a"),
+>>>>>>> be730d39 (init commit)
         ],
     )
     def test_name(
@@ -282,7 +369,11 @@ class TestDatasetList:
         res = list_dataset(get_http_api_auth, params=params)
         assert res["code"] == expected_code
         if expected_code == 0:
+<<<<<<< HEAD
             if params["name"] in [None, ""]:
+=======
+            if params["name"] is None:
+>>>>>>> be730d39 (init commit)
                 assert len(res["data"]) == expected_num
             else:
                 assert res["data"][0]["name"] == params["name"]
@@ -293,9 +384,14 @@ class TestDatasetList:
         "dataset_id, expected_code, expected_num, expected_message",
         [
             (None, 0, 3, ""),
+<<<<<<< HEAD
             ("", 0, 3, ""),
             (lambda r: r[0], 0, 1, ""),
             ("unknown", 102, 0, "You don't own the dataset unknown"),
+=======
+            (lambda r: r[0], 0, 1, ""),
+            ("a", 102, 0, "You don't own the dataset a"),
+>>>>>>> be730d39 (init commit)
         ],
     )
     def test_id(
@@ -315,7 +411,11 @@ class TestDatasetList:
         res = list_dataset(get_http_api_auth, params=params)
         assert res["code"] == expected_code
         if expected_code == 0:
+<<<<<<< HEAD
             if params["id"] in [None, ""]:
+=======
+            if params["id"] is None:
+>>>>>>> be730d39 (init commit)
                 assert len(res["data"]) == expected_num
             else:
                 assert res["data"][0]["id"] == params["id"]
@@ -327,8 +427,13 @@ class TestDatasetList:
         [
             (lambda r: r[0], "dataset_0", 0, 1, ""),
             (lambda r: r[0], "dataset_1", 0, 0, ""),
+<<<<<<< HEAD
             (lambda r: r[0], "unknown", 102, 0, "You don't own the dataset unknown"),
             ("id", "dataset_0", 102, 0, "You don't own the dataset id"),
+=======
+            (lambda r: r[0], "a", 102, 0, "You don't own the dataset a"),
+            ("a", "dataset_0", 102, 0, "You don't own the dataset a"),
+>>>>>>> be730d39 (init commit)
         ],
     )
     def test_name_and_id(

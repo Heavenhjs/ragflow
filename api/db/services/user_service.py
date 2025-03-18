@@ -29,6 +29,7 @@ from rag.settings import MINIO
 
 
 class UserService(CommonService):
+<<<<<<< HEAD
     """Service class for managing user-related database operations.
     
     This class extends CommonService to provide specialized functionality for user management,
@@ -37,11 +38,14 @@ class UserService(CommonService):
     Attributes:
         model: The User model class for database operations.
     """
+=======
+>>>>>>> be730d39 (init commit)
     model = User
 
     @classmethod
     @DB.connection_context()
     def filter_by_id(cls, user_id):
+<<<<<<< HEAD
         """Retrieve a user by their ID.
         
         Args:
@@ -50,6 +54,8 @@ class UserService(CommonService):
         Returns:
             User object if found, None otherwise.
         """
+=======
+>>>>>>> be730d39 (init commit)
         try:
             user = cls.model.select().where(cls.model.id == user_id).get()
             return user
@@ -59,6 +65,7 @@ class UserService(CommonService):
     @classmethod
     @DB.connection_context()
     def query_user(cls, email, password):
+<<<<<<< HEAD
         """Authenticate a user with email and password.
         
         Args:
@@ -68,6 +75,8 @@ class UserService(CommonService):
         Returns:
             User object if authentication successful, None otherwise.
         """
+=======
+>>>>>>> be730d39 (init commit)
         user = cls.model.select().where((cls.model.email == email),
                                         (cls.model.status == StatusEnum.VALID.value)).first()
         if user and check_password_hash(str(user.password), password):
@@ -110,6 +119,7 @@ class UserService(CommonService):
 
 
 class TenantService(CommonService):
+<<<<<<< HEAD
     """Service class for managing tenant-related database operations.
     
     This class extends CommonService to provide functionality for tenant management,
@@ -118,6 +128,8 @@ class TenantService(CommonService):
     Attributes:
         model: The Tenant model class for database operations.
     """
+=======
+>>>>>>> be730d39 (init commit)
     model = Tenant
 
     @classmethod
@@ -169,6 +181,7 @@ class TenantService(CommonService):
 
 
 class UserTenantService(CommonService):
+<<<<<<< HEAD
     """Service class for managing user-tenant relationship operations.
     
     This class extends CommonService to handle the many-to-many relationship
@@ -177,6 +190,8 @@ class UserTenantService(CommonService):
     Attributes:
         model: The UserTenant model class for database operations.
     """
+=======
+>>>>>>> be730d39 (init commit)
     model = UserTenant
 
     @classmethod

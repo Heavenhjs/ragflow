@@ -22,7 +22,10 @@ import os
 from huggingface_hub import snapshot_download
 
 from api.utils.file_utils import get_project_base_directory
+<<<<<<< HEAD
 from rag.settings import PARALLEL_DEVICES
+=======
+>>>>>>> be730d39 (init commit)
 from .operators import *  # noqa: F403
 from . import operators
 import math
@@ -67,12 +70,19 @@ def create_operators(op_param_list, global_config=None):
     return ops
 
 
+<<<<<<< HEAD
 def load_model(model_dir, nm, device_id: int | None = None):
     model_file_path = os.path.join(model_dir, nm + ".onnx")
     model_cached_tag = model_file_path + str(device_id) if device_id is not None else model_file_path
 
     global loaded_models
     loaded_model = loaded_models.get(model_cached_tag)
+=======
+def load_model(model_dir, nm):
+    model_file_path = os.path.join(model_dir, nm + ".onnx")
+    global loaded_models
+    loaded_model = loaded_models.get(model_file_path)
+>>>>>>> be730d39 (init commit)
     if loaded_model:
         logging.info(f"load_model {model_file_path} reuses cached model")
         return loaded_model
@@ -84,7 +94,11 @@ def load_model(model_dir, nm, device_id: int | None = None):
     def cuda_is_available():
         try:
             import torch
+<<<<<<< HEAD
             if torch.cuda.is_available() and torch.cuda.device_count() > device_id:
+=======
+            if torch.cuda.is_available():
+>>>>>>> be730d39 (init commit)
                 return True
         except Exception:
             return False
@@ -101,7 +115,11 @@ def load_model(model_dir, nm, device_id: int | None = None):
     run_options = ort.RunOptions()
     if cuda_is_available():
         cuda_provider_options = {
+<<<<<<< HEAD
             "device_id": device_id, # Use specific GPU
+=======
+            "device_id": 0, # Use specific GPU
+>>>>>>> be730d39 (init commit)
             "gpu_mem_limit": 512 * 1024 * 1024, # Limit gpu memory
             "arena_extend_strategy": "kNextPowerOfTwo",  # gpu memory allocation strategy
         }
@@ -111,7 +129,11 @@ def load_model(model_dir, nm, device_id: int | None = None):
             providers=['CUDAExecutionProvider'],
             provider_options=[cuda_provider_options]
             )
+<<<<<<< HEAD
         run_options.add_run_config_entry("memory.enable_memory_arena_shrinkage", "gpu:" + str(device_id))
+=======
+        run_options.add_run_config_entry("memory.enable_memory_arena_shrinkage", "gpu:0")
+>>>>>>> be730d39 (init commit)
         logging.info(f"load_model {model_file_path} uses GPU")
     else:
         sess = ort.InferenceSession(
@@ -121,12 +143,20 @@ def load_model(model_dir, nm, device_id: int | None = None):
         run_options.add_run_config_entry("memory.enable_memory_arena_shrinkage", "cpu")
         logging.info(f"load_model {model_file_path} uses CPU")
     loaded_model = (sess, run_options)
+<<<<<<< HEAD
     loaded_models[model_cached_tag] = loaded_model
+=======
+    loaded_models[model_file_path] = loaded_model
+>>>>>>> be730d39 (init commit)
     return loaded_model
 
 
 class TextRecognizer:
+<<<<<<< HEAD
     def __init__(self, model_dir, device_id: int | None = None):
+=======
+    def __init__(self, model_dir):
+>>>>>>> be730d39 (init commit)
         self.rec_image_shape = [int(v) for v in "3, 48, 320".split(",")]
         self.rec_batch_num = 16
         postprocess_params = {
@@ -135,7 +165,11 @@ class TextRecognizer:
             "use_space_char": True
         }
         self.postprocess_op = build_post_process(postprocess_params)
+<<<<<<< HEAD
         self.predictor, self.run_options = load_model(model_dir, 'rec', device_id)
+=======
+        self.predictor, self.run_options = load_model(model_dir, 'rec')
+>>>>>>> be730d39 (init commit)
         self.input_tensor = self.predictor.get_inputs()[0]
 
     def resize_norm_img(self, img, max_wh_ratio):
@@ -397,7 +431,11 @@ class TextRecognizer:
 
 
 class TextDetector:
+<<<<<<< HEAD
     def __init__(self, model_dir, device_id: int | None = None):
+=======
+    def __init__(self, model_dir):
+>>>>>>> be730d39 (init commit)
         pre_process_list = [{
             'DetResizeForTest': {
                 'limit_side_len': 960,
@@ -421,7 +459,11 @@ class TextDetector:
                               "unclip_ratio": 1.5, "use_dilation": False, "score_mode": "fast", "box_type": "quad"}
 
         self.postprocess_op = build_post_process(postprocess_params)
+<<<<<<< HEAD
         self.predictor, self.run_options = load_model(model_dir, 'det', device_id)
+=======
+        self.predictor, self.run_options = load_model(model_dir, 'det')
+>>>>>>> be730d39 (init commit)
         self.input_tensor = self.predictor.get_inputs()[0]
 
         img_h, img_w = self.input_tensor.shape[2:]
@@ -527,6 +569,7 @@ class OCR:
                 model_dir = os.path.join(
                         get_project_base_directory(),
                         "rag/res/deepdoc")
+<<<<<<< HEAD
                 
                 # Append muti-gpus task to the list
                 if PARALLEL_DEVICES is not None and PARALLEL_DEVICES > 0:
@@ -539,10 +582,15 @@ class OCR:
                     self.text_detector = [TextDetector(model_dir, 0)]
                     self.text_recognizer = [TextRecognizer(model_dir, 0)]
 
+=======
+                self.text_detector = TextDetector(model_dir)
+                self.text_recognizer = TextRecognizer(model_dir)
+>>>>>>> be730d39 (init commit)
             except Exception:
                 model_dir = snapshot_download(repo_id="InfiniFlow/deepdoc",
                                               local_dir=os.path.join(get_project_base_directory(), "rag/res/deepdoc"),
                                               local_dir_use_symlinks=False)
+<<<<<<< HEAD
                 
                 if PARALLEL_DEVICES is not None:
                     assert PARALLEL_DEVICES > 0, "Number of devices must be >= 1"
@@ -554,6 +602,10 @@ class OCR:
                 else:
                     self.text_detector = [TextDetector(model_dir, 0)]
                     self.text_recognizer = [TextRecognizer(model_dir, 0)]
+=======
+                self.text_detector = TextDetector(model_dir)
+                self.text_recognizer = TextRecognizer(model_dir)
+>>>>>>> be730d39 (init commit)
 
         self.drop_score = 0.5
         self.crop_image_res_index = 0
@@ -615,17 +667,25 @@ class OCR:
                     break
         return _boxes
 
+<<<<<<< HEAD
     def detect(self, img, device_id: int | None = None):
         if device_id is None:
             device_id = 0
 
+=======
+    def detect(self, img):
+>>>>>>> be730d39 (init commit)
         time_dict = {'det': 0, 'rec': 0, 'cls': 0, 'all': 0}
 
         if img is None:
             return None, None, time_dict
 
         start = time.time()
+<<<<<<< HEAD
         dt_boxes, elapse = self.text_detector[device_id](img)
+=======
+        dt_boxes, elapse = self.text_detector(img)
+>>>>>>> be730d39 (init commit)
         time_dict['det'] = elapse
 
         if dt_boxes is None:
@@ -636,6 +696,7 @@ class OCR:
         return zip(self.sorted_boxes(dt_boxes), [
                    ("", 0) for _ in range(len(dt_boxes))])
 
+<<<<<<< HEAD
     def recognize(self, ori_im, box, device_id: int | None = None):
         if device_id is None:
             device_id = 0
@@ -643,15 +704,26 @@ class OCR:
         img_crop = self.get_rotate_crop_image(ori_im, box)
 
         rec_res, elapse = self.text_recognizer[device_id]([img_crop])
+=======
+    def recognize(self, ori_im, box):
+        img_crop = self.get_rotate_crop_image(ori_im, box)
+
+        rec_res, elapse = self.text_recognizer([img_crop])
+>>>>>>> be730d39 (init commit)
         text, score = rec_res[0]
         if score < self.drop_score:
             return ""
         return text
 
+<<<<<<< HEAD
     def recognize_batch(self, img_list, device_id: int | None = None):
         if device_id is None:
             device_id = 0
         rec_res, elapse = self.text_recognizer[device_id](img_list)
+=======
+    def recognize_batch(self, img_list):
+        rec_res, elapse = self.text_recognizer(img_list)
+>>>>>>> be730d39 (init commit)
         texts = []
         for i in range(len(rec_res)):
             text, score = rec_res[i]
@@ -660,17 +732,26 @@ class OCR:
             texts.append(text)
         return texts
 
+<<<<<<< HEAD
     def __call__(self, img, device_id = 0, cls=True):
         time_dict = {'det': 0, 'rec': 0, 'cls': 0, 'all': 0}
         if device_id is None:
             device_id = 0
+=======
+    def __call__(self, img, cls=True):
+        time_dict = {'det': 0, 'rec': 0, 'cls': 0, 'all': 0}
+>>>>>>> be730d39 (init commit)
 
         if img is None:
             return None, None, time_dict
 
         start = time.time()
         ori_im = img.copy()
+<<<<<<< HEAD
         dt_boxes, elapse = self.text_detector[device_id](img)
+=======
+        dt_boxes, elapse = self.text_detector(img)
+>>>>>>> be730d39 (init commit)
         time_dict['det'] = elapse
 
         if dt_boxes is None:
@@ -687,7 +768,11 @@ class OCR:
             img_crop = self.get_rotate_crop_image(ori_im, tmp_box)
             img_crop_list.append(img_crop)
 
+<<<<<<< HEAD
         rec_res, elapse = self.text_recognizer[device_id](img_crop_list)
+=======
+        rec_res, elapse = self.text_recognizer(img_crop_list)
+>>>>>>> be730d39 (init commit)
 
         time_dict['rec'] = elapse
 

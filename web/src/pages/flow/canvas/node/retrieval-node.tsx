@@ -3,10 +3,17 @@ import { useFetchKnowledgeList } from '@/hooks/knowledge-hooks';
 import { IRetrievalNode } from '@/interfaces/database/flow';
 import { UserOutlined } from '@ant-design/icons';
 import { Handle, NodeProps, Position } from '@xyflow/react';
+<<<<<<< HEAD
 import { Avatar, Button, Flex } from 'antd';
 import classNames from 'classnames';
 import { get } from 'lodash';
 import { useMemo, useState } from 'react';
+=======
+import { Avatar, Flex } from 'antd';
+import classNames from 'classnames';
+import { get } from 'lodash';
+import { useMemo } from 'react';
+>>>>>>> be730d39 (init commit)
 import { LeftHandleStyle, RightHandleStyle } from './handle-icon';
 import styles from './index.less';
 import NodeHeader from './node-header';
@@ -20,7 +27,10 @@ export function RetrievalNode({
   const knowledgeBaseIds: string[] = get(data, 'form.kb_ids', []);
   const { theme } = useTheme();
   const { list: knowledgeList } = useFetchKnowledgeList(true);
+<<<<<<< HEAD
   const [showAllKnowledge, setShowAllKnowledge] = useState(false);
+=======
+>>>>>>> be730d39 (init commit)
   const knowledgeBases = useMemo(() => {
     return knowledgeBaseIds.map((x) => {
       const item = knowledgeList.find((y) => x === y.id);
@@ -32,6 +42,7 @@ export function RetrievalNode({
     });
   }, [knowledgeList, knowledgeBaseIds]);
 
+<<<<<<< HEAD
   const displayedKnowledgeBases = showAllKnowledge
     ? knowledgeBases
     : knowledgeBases.slice(0, 3);
@@ -39,6 +50,8 @@ export function RetrievalNode({
     e.stopPropagation(); // Prevent event from bubbling to parent
     setShowAllKnowledge(!showAllKnowledge);
   }
+=======
+>>>>>>> be730d39 (init commit)
   return (
     <section
       className={classNames(
@@ -74,7 +87,11 @@ export function RetrievalNode({
         })}
       ></NodeHeader>
       <Flex vertical gap={8}>
+<<<<<<< HEAD
         {displayedKnowledgeBases.map((knowledge) => {
+=======
+        {knowledgeBases.map((knowledge) => {
+>>>>>>> be730d39 (init commit)
           return (
             <div className={styles.nodeText} key={knowledge.id}>
               <Flex align={'center'} gap={6}>
@@ -90,6 +107,7 @@ export function RetrievalNode({
             </div>
           );
         })}
+<<<<<<< HEAD
         {knowledgeBases.length > 3 && (
           <div className={styles.nodeText}>
             <Button
@@ -109,6 +127,8 @@ export function RetrievalNode({
             </Button>
           </div>
         )}
+=======
+>>>>>>> be730d39 (init commit)
       </Flex>
     </section>
   );

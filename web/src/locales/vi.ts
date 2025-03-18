@@ -153,7 +153,11 @@ export default {
       changeSpecificCategory: 'Thay đổi danh mục cụ thể',
       uploadTitle: 'Nhấp hoặc kéo thả tệp vào khu vực này để tải lên',
       uploadDescription:
+<<<<<<< HEAD
         'RAGFlow hỗ trợ tải lên tệp một lần hoặc theo lô. Đối với RAGFlow triển khai cục bộ: giới hạn tổng kích thước tệp cho mỗi lần tải lên là 1GB, với giới hạn tải lên theo lô là 32 tệp. Không có giới hạn về tổng số tệp trên mỗi tài khoản. Đối với demo.ragflow.io: giới hạn tổng kích thước tệp cho mỗi lần tải lên là 10MB, với mỗi tệp không vượt quá 10MB và tối đa là 128 tệp trên mỗi tài khoản.',
+=======
+        'Hỗ trợ tải lên đơn hoặc hàng loạt. Nghiêm cấm tải lên dữ liệu công ty hoặc các tệp bị cấm khác.',
+>>>>>>> be730d39 (init commit)
       chunk: 'Khối',
       bulk: 'Hàng loạt',
       cancel: 'Hủy bỏ',
@@ -711,7 +715,11 @@ export default {
       directory: 'Thư mục',
       uploadTitle: 'Nhấp hoặc kéo thả tệp vào khu vực này để tải lên',
       uploadDescription:
+<<<<<<< HEAD
         'RAGFlow hỗ trợ tải lên tệp một lần hoặc theo lô. Đối với RAGFlow triển khai cục bộ: giới hạn tổng kích thước tệp cho mỗi lần tải lên là 1GB, với giới hạn tải lên theo lô là 32 tệp. Không có giới hạn về tổng số tệp trên mỗi tài khoản. Đối với demo.ragflow.io: giới hạn tổng kích thước tệp cho mỗi lần tải lên là 10MB, với mỗi tệp không vượt quá 10MB và tối đa là 128 tệp trên mỗi tài khoản.',
+=======
+        'Hỗ trợ tải lên đơn hoặc hàng loạt. Nghiêm cấm tải lên dữ liệu công ty hoặc các tệp bị cấm khác.',
+>>>>>>> be730d39 (init commit)
       local: 'Tải lên cục bộ',
       s3: 'Tải lên S3',
       preview: 'Xem trước',

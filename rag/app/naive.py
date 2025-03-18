@@ -15,6 +15,7 @@
 #
 
 import logging
+<<<<<<< HEAD
 import re
 from functools import reduce
 from io import BytesIO
@@ -30,6 +31,22 @@ from deepdoc.parser import DocxParser, ExcelParser, HtmlParser, JsonParser, Mark
 from deepdoc.parser.pdf_parser import PlainParser
 from rag.nlp import concat_img, find_codec, naive_merge, naive_merge_docx, rag_tokenizer, tokenize_chunks, tokenize_chunks_docx, tokenize_table
 from rag.utils import num_tokens_from_string
+=======
+from tika import parser
+from io import BytesIO
+from docx import Document
+from timeit import default_timer as timer
+import re
+from deepdoc.parser.pdf_parser import PlainParser
+from rag.nlp import rag_tokenizer, naive_merge, tokenize_table, tokenize_chunks, find_codec, concat_img, \
+    naive_merge_docx, tokenize_chunks_docx
+from deepdoc.parser import PdfParser, ExcelParser, DocxParser, HtmlParser, JsonParser, MarkdownParser, TxtParser
+from rag.utils import num_tokens_from_string
+from PIL import Image
+from functools import reduce
+from markdown import markdown
+from docx.image.exceptions import UnrecognizedImageError, UnexpectedEndOfFileError, InvalidImageStreamError
+>>>>>>> be730d39 (init commit)
 
 
 class Docx(DocxParser):
@@ -128,9 +145,12 @@ class Docx(DocxParser):
 
 
 class Pdf(PdfParser):
+<<<<<<< HEAD
     def __init__(self):
         super().__init__()
 
+=======
+>>>>>>> be730d39 (init commit)
     def __call__(self, filename, binary=None, from_page=0,
                  to_page=100000, zoomin=3, callback=None):
         start = timer()
@@ -244,7 +264,11 @@ def chunk(filename, binary=None, from_page=0, to_page=100000,
                                       callback=callback)
         res = tokenize_table(tables, doc, is_english)
 
+<<<<<<< HEAD
     elif re.search(r"\.(csv|xlsx?)$", filename, re.IGNORECASE):
+=======
+    elif re.search(r"\.xlsx?$", filename, re.IGNORECASE):
+>>>>>>> be730d39 (init commit)
         callback(0.1, "Start to parse.")
         excel_parser = ExcelParser()
         if parser_config.get("html4excel"):
@@ -311,7 +335,15 @@ def chunk(filename, binary=None, from_page=0, to_page=100000,
 if __name__ == "__main__":
     import sys
 
+<<<<<<< HEAD
     def dummy(prog=None, msg=""):
         pass
 
+=======
+
+    def dummy(prog=None, msg=""):
+        pass
+
+
+>>>>>>> be730d39 (init commit)
     chunk(sys.argv[1], from_page=0, to_page=10, callback=dummy)

@@ -22,7 +22,11 @@
         <img alt="Lencana Daring" src="https://img.shields.io/badge/Online-Demo-4e6b99">
     </a>
     <a href="https://hub.docker.com/r/infiniflow/ragflow" target="_blank">
+<<<<<<< HEAD
         <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.2-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.2">
+=======
+        <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.1-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.1">
+>>>>>>> be730d39 (init commit)
     </a>
     <a href="https://github.com/infiniflow/ragflow/releases/latest">
         <img src="https://img.shields.io/github/v/release/infiniflow/ragflow?color=blue&label=Rilis%20Terbaru" alt="Rilis Terbaru">
@@ -171,6 +175,7 @@ Coba demo kami di [https://demo.ragflow.io](https://demo.ragflow.io).
 > Semua gambar Docker dibangun untuk platform x86. Saat ini, kami tidak menawarkan gambar Docker untuk ARM64.
 > Jika Anda menggunakan platform ARM64, [silakan gunakan panduan ini untuk membangun gambar Docker yang kompatibel dengan sistem Anda](https://ragflow.io/docs/dev/build_docker_image).
 
+<<<<<<< HEAD
    > Perintah di bawah ini mengunduh edisi v0.17.2-slim dari gambar Docker RAGFlow. Silakan merujuk ke tabel berikut untuk deskripsi berbagai edisi RAGFlow. Untuk mengunduh edisi RAGFlow yang berbeda dari v0.17.2-slim, perbarui variabel RAGFLOW_IMAGE di docker/.env sebelum menggunakan docker compose untuk memulai server. Misalnya, atur RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.2 untuk edisi lengkap v0.17.2.
 
    ```bash
@@ -180,12 +185,24 @@ Coba demo kami di [https://demo.ragflow.io](https://demo.ragflow.io).
 
    # To use GPU to accelerate embedding and DeepDoc tasks:
    # docker compose -f docker-compose-gpu.yml up -d
+=======
+   > Perintah di bawah ini mengunduh edisi v0.17.1-slim dari gambar Docker RAGFlow. Silakan merujuk ke tabel berikut untuk deskripsi berbagai edisi RAGFlow. Untuk mengunduh edisi RAGFlow yang berbeda dari v0.17.1-slim, perbarui variabel RAGFLOW_IMAGE di docker/.env sebelum menggunakan docker compose untuk memulai server. Misalnya, atur RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.1 untuk edisi lengkap v0.17.1.
+
+   ```bash
+   $ cd ragflow/docker
+   $ docker compose -f docker-compose.yml up -d
+>>>>>>> be730d39 (init commit)
    ```
 
    | RAGFlow image tag | Image size (GB) | Has embedding models? | Stable?                  |
    | ----------------- | --------------- | --------------------- | ------------------------ |
+<<<<<<< HEAD
    | v0.17.2           | &approx;9       | :heavy_check_mark:    | Stable release           |
    | v0.17.2-slim      | &approx;2       | ❌                    | Stable release           |
+=======
+   | v0.17.1           | &approx;9       | :heavy_check_mark:    | Stable release           |
+   | v0.17.1-slim      | &approx;2       | ❌                    | Stable release           |
+>>>>>>> be730d39 (init commit)
    | nightly           | &approx;9       | :heavy_check_mark:    | _Unstable_ nightly build |
    | nightly-slim      | &approx;2       | ❌                    | _Unstable_ nightly build |
 

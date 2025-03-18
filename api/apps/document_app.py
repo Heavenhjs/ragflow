@@ -380,7 +380,11 @@ def run():
                 doc = doc.to_dict()
                 doc["tenant_id"] = tenant_id
                 bucket, name = File2DocumentService.get_storage_address(doc_id=doc["id"])
+<<<<<<< HEAD
                 queue_tasks(doc, bucket, name, 0)
+=======
+                queue_tasks(doc, bucket, name)
+>>>>>>> be730d39 (init commit)
 
         return get_json_result(data=True)
     except Exception as e:

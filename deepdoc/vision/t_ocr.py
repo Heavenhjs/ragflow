@@ -28,6 +28,7 @@ from deepdoc.vision.seeit import draw_box
 from deepdoc.vision import OCR, init_in_out
 import argparse
 import numpy as np
+<<<<<<< HEAD
 import trio
 
 # os.environ['CUDA_VISIBLE_DEVICES'] = '0,2' #2 gpus, uncontinuous
@@ -46,6 +47,16 @@ def main(args):
     def __ocr(i, id, img):
         print("Task {} start".format(i))
         bxs = ocr(np.array(img), id)
+=======
+
+
+def main(args):
+    ocr = OCR()
+    images, outputs = init_in_out(args)
+
+    for i, img in enumerate(images):
+        bxs = ocr(np.array(img))
+>>>>>>> be730d39 (init commit)
         bxs = [(line[0], line[1][0]) for line in bxs]
         bxs = [{
             "text": t,
@@ -57,6 +68,7 @@ def main(args):
         with open(outputs[i] + ".txt", "w+", encoding='utf-8') as f:
             f.write("\n".join([o["text"] for o in bxs]))
 
+<<<<<<< HEAD
         print("Task {} done".format(i))
 
     async def __ocr_thread(i, id, img, limiter = None):
@@ -81,6 +93,8 @@ def main(args):
 
     print("OCR tasks are all done")
 
+=======
+>>>>>>> be730d39 (init commit)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

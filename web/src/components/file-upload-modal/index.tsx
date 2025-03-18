@@ -68,10 +68,14 @@ const FileUpload = ({
   );
 };
 
+<<<<<<< HEAD
 interface IFileUploadModalProps
   extends IModalProps<
     { parseOnCreation: boolean; directoryFileList: UploadFile[] } | UploadFile[]
   > {
+=======
+interface IFileUploadModalProps extends IModalProps<boolean | UploadFile[]> {
+>>>>>>> be730d39 (init commit)
   uploadFileList?: UploadFile[];
   setUploadFileList?: Dispatch<SetStateAction<UploadFile[]>>;
   uploadProgress?: number;
@@ -111,9 +115,13 @@ const FileUploadModal = ({
     }
 
     const ret = await onFileUploadOk?.(
+<<<<<<< HEAD
       fileList
         ? { parseOnCreation, directoryFileList }
         : [...currentFileList, ...directoryFileList],
+=======
+      fileList ? parseOnCreation : [...currentFileList, ...directoryFileList],
+>>>>>>> be730d39 (init commit)
     );
     return ret;
   };

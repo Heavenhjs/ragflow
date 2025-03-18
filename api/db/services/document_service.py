@@ -13,14 +13,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+<<<<<<< HEAD
 import json
 import logging
+=======
+import logging
+import xxhash
+import json
+>>>>>>> be730d39 (init commit)
 import random
 import re
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 from datetime import datetime
 from io import BytesIO
+<<<<<<< HEAD
 
 import trio
 import xxhash
@@ -37,6 +44,26 @@ from rag.nlp import rag_tokenizer, search
 from rag.settings import get_svr_queue_name
 from rag.utils.redis_conn import REDIS_CONN
 from rag.utils.storage_factory import STORAGE_IMPL
+=======
+import trio
+
+from peewee import fn
+
+from api.db.db_utils import bulk_insert_into_db
+from api import settings
+from api.utils import current_timestamp, get_format_time, get_uuid
+from rag.settings import SVR_QUEUE_NAME
+from rag.utils.storage_factory import STORAGE_IMPL
+from rag.nlp import search, rag_tokenizer
+
+from api.db import FileType, TaskStatus, ParserType, LLMType
+from api.db.db_models import DB, Knowledgebase, Tenant, Task, UserTenant
+from api.db.db_models import Document
+from api.db.services.common_service import CommonService
+from api.db.services.knowledgebase_service import KnowledgebaseService
+from api.db import StatusEnum
+from rag.utils.redis_conn import REDIS_CONN
+>>>>>>> be730d39 (init commit)
 
 
 class DocumentService(CommonService):
@@ -93,7 +120,13 @@ class DocumentService(CommonService):
     def insert(cls, doc):
         if not cls.save(**doc):
             raise RuntimeError("Database error (Document)!")
+<<<<<<< HEAD
         if not KnowledgebaseService.atomic_increase_doc_num_by_id(doc["kb_id"]):
+=======
+        e, kb = KnowledgebaseService.get_by_id(doc["kb_id"])
+        if not KnowledgebaseService.update_by_id(
+                kb.id, {"doc_num": kb.doc_num + 1}):
+>>>>>>> be730d39 (init commit)
             raise RuntimeError("Database error (Knowledgebase)!")
         return Document(**doc)
 
@@ -169,9 +202,15 @@ class DocumentService(CommonService):
                 "Document not found which is supposed to be there")
         num = Knowledgebase.update(
             token_num=Knowledgebase.token_num +
+<<<<<<< HEAD
             token_num,
             chunk_num=Knowledgebase.chunk_num +
             chunk_num).where(
+=======
+                      token_num,
+            chunk_num=Knowledgebase.chunk_num +
+                      chunk_num).where(
+>>>>>>> be730d39 (init commit)
             Knowledgebase.id == kb_id).execute()
         return num
 
@@ -187,9 +226,15 @@ class DocumentService(CommonService):
                 "Document not found which is supposed to be there")
         num = Knowledgebase.update(
             token_num=Knowledgebase.token_num -
+<<<<<<< HEAD
             token_num,
             chunk_num=Knowledgebase.chunk_num -
             chunk_num
+=======
+                      token_num,
+            chunk_num=Knowledgebase.chunk_num -
+                      chunk_num
+>>>>>>> be730d39 (init commit)
         ).where(
             Knowledgebase.id == kb_id).execute()
         return num
@@ -202,9 +247,15 @@ class DocumentService(CommonService):
 
         num = Knowledgebase.update(
             token_num=Knowledgebase.token_num -
+<<<<<<< HEAD
             doc.token_num,
             chunk_num=Knowledgebase.chunk_num -
             doc.chunk_num,
+=======
+                      doc.token_num,
+            chunk_num=Knowledgebase.chunk_num -
+                      doc.chunk_num,
+>>>>>>> be730d39 (init commit)
             doc_num=Knowledgebase.doc_num - 1
         ).where(
             Knowledgebase.id == doc.kb_id).execute()
@@ -216,7 +267,11 @@ class DocumentService(CommonService):
         docs = cls.model.select(
             Knowledgebase.tenant_id).join(
             Knowledgebase, on=(
+<<<<<<< HEAD
                 Knowledgebase.id == cls.model.kb_id)).where(
+=======
+                    Knowledgebase.id == cls.model.kb_id)).where(
+>>>>>>> be730d39 (init commit)
             cls.model.id == doc_id, Knowledgebase.status == StatusEnum.VALID.value)
         docs = docs.dicts()
         if not docs:
@@ -238,7 +293,11 @@ class DocumentService(CommonService):
         docs = cls.model.select(
             Knowledgebase.tenant_id).join(
             Knowledgebase, on=(
+<<<<<<< HEAD
                 Knowledgebase.id == cls.model.kb_id)).where(
+=======
+                    Knowledgebase.id == cls.model.kb_id)).where(
+>>>>>>> be730d39 (init commit)
             cls.model.name == name, Knowledgebase.status == StatusEnum.VALID.value)
         docs = docs.dicts()
         if not docs:
@@ -251,7 +310,11 @@ class DocumentService(CommonService):
         docs = cls.model.select(
             cls.model.id).join(
             Knowledgebase, on=(
+<<<<<<< HEAD
                 Knowledgebase.id == cls.model.kb_id)
+=======
+                    Knowledgebase.id == cls.model.kb_id)
+>>>>>>> be730d39 (init commit)
         ).join(UserTenant, on=(UserTenant.tenant_id == Knowledgebase.tenant_id)
                ).where(cls.model.id == doc_id, UserTenant.user_id == user_id).paginate(0, 1)
         docs = docs.dicts()
@@ -265,7 +328,11 @@ class DocumentService(CommonService):
         docs = cls.model.select(
             cls.model.id).join(
             Knowledgebase, on=(
+<<<<<<< HEAD
                 Knowledgebase.id == cls.model.kb_id)
+=======
+                    Knowledgebase.id == cls.model.kb_id)
+>>>>>>> be730d39 (init commit)
         ).where(cls.model.id == doc_id, Knowledgebase.created_by == user_id).paginate(0, 1)
         docs = docs.dicts()
         if not docs:
@@ -278,7 +345,11 @@ class DocumentService(CommonService):
         docs = cls.model.select(
             Knowledgebase.embd_id).join(
             Knowledgebase, on=(
+<<<<<<< HEAD
                 Knowledgebase.id == cls.model.kb_id)).where(
+=======
+                    Knowledgebase.id == cls.model.kb_id)).where(
+>>>>>>> be730d39 (init commit)
             cls.model.id == doc_id, Knowledgebase.status == StatusEnum.VALID.value)
         docs = docs.dicts()
         if not docs:
@@ -301,9 +372,15 @@ class DocumentService(CommonService):
                 Tenant.asr_id,
                 Tenant.llm_id,
             )
+<<<<<<< HEAD
             .join(Knowledgebase, on=(cls.model.kb_id == Knowledgebase.id))
             .join(Tenant, on=(Knowledgebase.tenant_id == Tenant.id))
             .where(cls.model.id == doc_id)
+=======
+                .join(Knowledgebase, on=(cls.model.kb_id == Knowledgebase.id))
+                .join(Tenant, on=(Knowledgebase.tenant_id == Tenant.id))
+                .where(cls.model.id == doc_id)
+>>>>>>> be730d39 (init commit)
         )
         configs = configs.dicts()
         if not configs:
@@ -331,8 +408,11 @@ class DocumentService(CommonService):
     @classmethod
     @DB.connection_context()
     def update_parser_config(cls, id, config):
+<<<<<<< HEAD
         if not config:
             return
+=======
+>>>>>>> be730d39 (init commit)
         e, d = cls.get_by_id(id)
         if not e:
             raise LookupError(f"Document({id}) not found.")
@@ -369,7 +449,10 @@ class DocumentService(CommonService):
                     "progress_msg": "Task is queued...",
                     "process_begin_at": get_format_time()
                     })
+<<<<<<< HEAD
 
+=======
+>>>>>>> be730d39 (init commit)
     @classmethod
     @DB.connection_context()
     def update_meta_fields(cls, doc_id, meta_fields):
@@ -392,7 +475,10 @@ class DocumentService(CommonService):
                 has_graphrag = False
                 e, doc = DocumentService.get_by_id(d["id"])
                 status = doc.run  # TaskStatus.RUNNING.value
+<<<<<<< HEAD
                 priority = 0
+=======
+>>>>>>> be730d39 (init commit)
                 for t in tsks:
                     if 0 <= t.progress < 1:
                         finished = False
@@ -404,17 +490,27 @@ class DocumentService(CommonService):
                         has_raptor = True
                     elif t.task_type == "graphrag":
                         has_graphrag = True
+<<<<<<< HEAD
                     priority = max(priority, t.priority)
+=======
+>>>>>>> be730d39 (init commit)
                 prg /= len(tsks)
                 if finished and bad:
                     prg = -1
                     status = TaskStatus.FAIL.value
                 elif finished:
                     if d["parser_config"].get("raptor", {}).get("use_raptor") and not has_raptor:
+<<<<<<< HEAD
                         queue_raptor_o_graphrag_tasks(d, "raptor", priority)
                         prg = 0.98 * len(tsks) / (len(tsks) + 1)
                     elif d["parser_config"].get("graphrag", {}).get("use_graphrag") and not has_graphrag:
                         queue_raptor_o_graphrag_tasks(d, "graphrag", priority)
+=======
+                        queue_raptor_o_graphrag_tasks(d, "raptor")
+                        prg = 0.98 * len(tsks) / (len(tsks) + 1)
+                    elif d["parser_config"].get("graphrag", {}).get("use_graphrag") and not has_graphrag:
+                        queue_raptor_o_graphrag_tasks(d, "graphrag")
+>>>>>>> be730d39 (init commit)
                         prg = 0.98 * len(tsks) / (len(tsks) + 1)
                     else:
                         status = TaskStatus.DONE.value
@@ -423,7 +519,11 @@ class DocumentService(CommonService):
                 info = {
                     "process_duation": datetime.timestamp(
                         datetime.now()) -
+<<<<<<< HEAD
                     d["process_begin_at"].timestamp(),
+=======
+                                       d["process_begin_at"].timestamp(),
+>>>>>>> be730d39 (init commit)
                     "run": status}
                 if prg != 0:
                     info["progress"] = prg
@@ -451,7 +551,11 @@ class DocumentService(CommonService):
         return False
 
 
+<<<<<<< HEAD
 def queue_raptor_o_graphrag_tasks(doc, ty, priority):
+=======
+def queue_raptor_o_graphrag_tasks(doc, ty):
+>>>>>>> be730d39 (init commit)
     chunking_config = DocumentService.get_chunking_config(doc["id"])
     hasher = xxhash.xxh64()
     for field in sorted(chunking_config.keys()):
@@ -474,17 +578,30 @@ def queue_raptor_o_graphrag_tasks(doc, ty, priority):
     hasher.update(ty.encode("utf-8"))
     task["digest"] = hasher.hexdigest()
     bulk_insert_into_db(Task, [task], True)
+<<<<<<< HEAD
     assert REDIS_CONN.queue_product(get_svr_queue_name(priority), message=task), "Can't access Redis. Please check the Redis' status."
 
 
 def doc_upload_and_parse(conversation_id, file_objs, user_id):
     from api.db.services.api_service import API4ConversationService
     from api.db.services.conversation_service import ConversationService
+=======
+    assert REDIS_CONN.queue_product(SVR_QUEUE_NAME, message=task), "Can't access Redis. Please check the Redis' status."
+
+
+def doc_upload_and_parse(conversation_id, file_objs, user_id):
+    from rag.app import presentation, picture, naive, audio, email
+>>>>>>> be730d39 (init commit)
     from api.db.services.dialog_service import DialogService
     from api.db.services.file_service import FileService
     from api.db.services.llm_service import LLMBundle
     from api.db.services.user_service import TenantService
+<<<<<<< HEAD
     from rag.app import audio, email, naive, picture, presentation
+=======
+    from api.db.services.api_service import API4ConversationService
+    from api.db.services.conversation_service import ConversationService
+>>>>>>> be730d39 (init commit)
 
     e, conv = ConversationService.get_by_id(conversation_id)
     if not e:

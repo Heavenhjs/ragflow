@@ -193,11 +193,22 @@ class RedisDB:
             self.__open__()
         return False
 
+<<<<<<< HEAD
     def queue_product(self, queue, message) -> bool:
         for _ in range(3):
             try:
                 payload = {"message": json.dumps(message)}
                 self.REDIS.xadd(queue, payload)
+=======
+    def queue_product(self, queue, message, exp=settings.SVR_QUEUE_RETENTION) -> bool:
+        for _ in range(3):
+            try:
+                payload = {"message": json.dumps(message)}
+                pipeline = self.REDIS.pipeline()
+                pipeline.xadd(queue, payload)
+                # pipeline.expire(queue, exp)
+                pipeline.execute()
+>>>>>>> be730d39 (init commit)
                 return True
             except Exception as e:
                 logging.exception(
@@ -239,6 +250,7 @@ class RedisDB:
                 )
         return None
 
+<<<<<<< HEAD
     def get_unacked_iterator(self, queue_names: list[str], group_name, consumer_name):
         try:
             for queue_name in queue_names:
@@ -253,6 +265,21 @@ class RedisDB:
                     current_min = payload.get_msg_id()
                     logging.info(f"RedisDB.get_unacked_iterator {consumer_name} msg_id {current_min}")
                     yield payload
+=======
+    def get_unacked_iterator(self, queue_name, group_name, consumer_name):
+        try:
+            group_info = self.REDIS.xinfo_groups(queue_name)
+            if not any(e["name"] == group_name for e in group_info):
+                return
+            current_min = 0
+            while True:
+                payload = self.queue_consumer(queue_name, group_name, consumer_name, current_min)
+                if not payload:
+                    return
+                current_min = payload.get_msg_id()
+                logging.info(f"RedisDB.get_unacked_iterator {consumer_name} msg_id {current_min}")
+                yield payload
+>>>>>>> be730d39 (init commit)
         except Exception as e:
             if "key" in str(e):
                 return

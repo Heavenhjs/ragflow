@@ -20,6 +20,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "chardet"
 version = "5.2.0"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -29,6 +30,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> be730d39 (init commit)
 name = "charset-normalizer"
 version = "3.4.1"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -86,6 +89,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "et-xmlfile"
 version = "2.0.0"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -95,6 +99,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> be730d39 (init commit)
 name = "exceptiongroup"
 version = "1.2.2"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -122,6 +128,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "lxml"
 version = "5.3.1"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -199,6 +206,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> be730d39 (init commit)
 name = "packaging"
 version = "24.2"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -208,6 +217,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "pillow"
 version = "11.1.0"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -256,6 +266,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> be730d39 (init commit)
 name = "pluggy"
 version = "1.5.0"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -282,6 +294,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "python-docx"
 version = "1.1.2"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -323,6 +336,15 @@ dependencies = [
     { name = "reportlab" },
     { name = "requests" },
     { name = "requests-toolbelt" },
+=======
+name = "ragflow-sdk"
+version = "0.17.1"
+source = { virtual = "." }
+dependencies = [
+    { name = "beartype" },
+    { name = "pytest" },
+    { name = "requests" },
+>>>>>>> be730d39 (init commit)
 ]
 
 [package.optional-dependencies]
@@ -333,6 +355,7 @@ test = [
 [package.metadata]
 requires-dist = [
     { name = "beartype", specifier = ">=0.18.5,<0.19.0" },
+<<<<<<< HEAD
     { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "pillow", specifier = ">=11.1.0" },
     { name = "pytest", specifier = ">=8.0.0,<9.0.0" },
@@ -355,6 +378,11 @@ dependencies = [
 sdist = { url = "https://mirrors.aliyun.com/pypi/packages/a7/5c/9b23c8a9a69f2bc1f1268ed545f393a60b59cbe5f9d861a28b676f809729/reportlab-4.3.1.tar.gz", hash = "sha256:230f78b21667194d8490ac9d12958d5c14686352db7fbe03b95140fafdf5aa97" }
 wheels = [
     { url = "https://mirrors.aliyun.com/pypi/packages/ce/6b/42805895ed08a314a01be6110584b5d059328386988ddbc4f8f10014d30e/reportlab-4.3.1-py3-none-any.whl", hash = "sha256:0f37dd16652db3ef84363cf744632a28c38bd480d5bf94683466852d7bb678dd" },
+=======
+    { name = "pytest", specifier = ">=8.0.0,<9.0.0" },
+    { name = "pytest", marker = "extra == 'test'", specifier = ">=8.0.0,<9.0.0" },
+    { name = "requests", specifier = ">=2.30.0,<3.0.0" },
+>>>>>>> be730d39 (init commit)
 ]
 
 [[package]]
@@ -373,6 +401,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "requests-toolbelt"
 version = "1.0.0"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -385,6 +414,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> be730d39 (init commit)
 name = "tomli"
 version = "2.2.1"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -414,6 +445,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "typing-extensions"
 version = "4.12.2"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -423,6 +455,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> be730d39 (init commit)
 name = "urllib3"
 version = "2.3.0"
 source = { registry = "https://mirrors.aliyun.com/pypi/simple" }
@@ -430,6 +464,7 @@ sdist = { url = "https://mirrors.aliyun.com/pypi/packages/aa/63/e53da845320b757b
 wheels = [
     { url = "https://mirrors.aliyun.com/pypi/packages/c8/19/4ec628951a74043532ca2cf5d97b7b14863931476d117c471e8e2b1eb39f/urllib3-2.3.0-py3-none-any.whl", hash = "sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df" },
 ]
+<<<<<<< HEAD
 
 [[package]]
 name = "xlsxwriter"
@@ -439,3 +474,5 @@ sdist = { url = "https://mirrors.aliyun.com/pypi/packages/a1/08/26f69d1e9264e810
 wheels = [
     { url = "https://mirrors.aliyun.com/pypi/packages/9b/07/df054f7413bdfff5e98f75056e4ed0977d0c8716424011fac2587864d1d3/XlsxWriter-3.2.2-py3-none-any.whl", hash = "sha256:272ce861e7fa5e82a4a6ebc24511f2cb952fde3461f6c6e1a1e81d3272db1471" },
 ]
+=======
+>>>>>>> be730d39 (init commit)

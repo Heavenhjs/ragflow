@@ -22,7 +22,11 @@
         <img alt="Badge Estático" src="https://img.shields.io/badge/Online-Demo-4e6b99">
     </a>
     <a href="https://hub.docker.com/r/infiniflow/ragflow" target="_blank">
+<<<<<<< HEAD
         <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.2-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.2">
+=======
+        <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.1-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.1">
+>>>>>>> be730d39 (init commit)
     </a>
     <a href="https://github.com/infiniflow/ragflow/releases/latest">
         <img src="https://img.shields.io/github/v/release/infiniflow/ragflow?color=blue&label=Última%20Relese" alt="Última Versão">
@@ -171,6 +175,7 @@ Experimente nossa demo em [https://demo.ragflow.io](https://demo.ragflow.io).
 > Todas as imagens Docker são construídas para plataformas x86. Atualmente, não oferecemos imagens Docker para ARM64.
 > Se você estiver usando uma plataforma ARM64, por favor, utilize [este guia](https://ragflow.io/docs/dev/build_docker_image) para construir uma imagem Docker compatível com o seu sistema.
 
+<<<<<<< HEAD
     > O comando abaixo baixa a edição `v0.17.2-slim` da imagem Docker do RAGFlow. Consulte a tabela a seguir para descrições de diferentes edições do RAGFlow. Para baixar uma edição do RAGFlow diferente da `v0.17.2-slim`, atualize a variável `RAGFLOW_IMAGE` conforme necessário no **docker/.env** antes de usar `docker compose` para iniciar o servidor. Por exemplo: defina `RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.2` para a edição completa `v0.17.2`.
 
     ```bash
@@ -180,12 +185,24 @@ Experimente nossa demo em [https://demo.ragflow.io](https://demo.ragflow.io).
     
     # To use GPU to accelerate embedding and DeepDoc tasks:
     # docker compose -f docker-compose-gpu.yml up -d
+=======
+    > O comando abaixo baixa a edição `v0.17.1-slim` da imagem Docker do RAGFlow. Consulte a tabela a seguir para descrições de diferentes edições do RAGFlow. Para baixar uma edição do RAGFlow diferente da `v0.17.1-slim`, atualize a variável `RAGFLOW_IMAGE` conforme necessário no **docker/.env** antes de usar `docker compose` para iniciar o servidor. Por exemplo: defina `RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.1` para a edição completa `v0.17.1`.
+
+    ```bash
+    $ cd ragflow/docker
+    $ docker compose -f docker-compose.yml up -d
+>>>>>>> be730d39 (init commit)
     ```
 
     | Tag da imagem RAGFlow | Tamanho da imagem (GB) | Possui modelos de incorporação? | Estável?                 |
     | --------------------- | ---------------------- | ------------------------------- | ------------------------ |
+<<<<<<< HEAD
     | v0.17.2               | ~9                     | :heavy_check_mark:              | Lançamento estável       |
     | v0.17.2-slim          | ~2                     | ❌                              | Lançamento estável       |
+=======
+    | v0.17.1               | ~9                     | :heavy_check_mark:              | Lançamento estável       |
+    | v0.17.1-slim          | ~2                     | ❌                              | Lançamento estável       |
+>>>>>>> be730d39 (init commit)
     | nightly               | ~9                     | :heavy_check_mark:              | _Instável_ build noturno |
     | nightly-slim          | ~2                     | ❌                               | _Instável_ build noturno |
 

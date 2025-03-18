@@ -22,7 +22,11 @@
         <img alt="Static Badge" src="https://img.shields.io/badge/Online-Demo-4e6b99">
     </a>
     <a href="https://hub.docker.com/r/infiniflow/ragflow" target="_blank">
+<<<<<<< HEAD
         <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.2-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.2">
+=======
+        <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.1-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.1">
+>>>>>>> be730d39 (init commit)
     </a>
     <a href="https://github.com/infiniflow/ragflow/releases/latest">
         <img src="https://img.shields.io/github/v/release/infiniflow/ragflow?color=blue&label=Latest%20Release" alt="Latest Release">
@@ -151,6 +155,7 @@
 > 現在、公式に提供されているすべての Docker イメージは x86 アーキテクチャ向けにビルドされており、ARM64 用の Docker イメージは提供されていません。
 > ARM64 アーキテクチャのオペレーティングシステムを使用している場合は、[このドキュメント](https://ragflow.io/docs/dev/build_docker_image)を参照して Docker イメージを自分でビルドしてください。
 
+<<<<<<< HEAD
    > 以下のコマンドは、RAGFlow Docker イメージの v0.17.2-slim エディションをダウンロードします。異なる RAGFlow エディションの説明については、以下の表を参照してください。v0.17.2-slim とは異なるエディションをダウンロードするには、docker/.env ファイルの RAGFLOW_IMAGE 変数を適宜更新し、docker compose を使用してサーバーを起動してください。例えば、完全版 v0.17.2 をダウンロードするには、RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.2 と設定します。
 
    ```bash
@@ -160,12 +165,24 @@
 
    # To use GPU to accelerate embedding and DeepDoc tasks:
    # docker compose -f docker-compose-gpu.yml up -d
+=======
+   > 以下のコマンドは、RAGFlow Docker イメージの v0.17.1-slim エディションをダウンロードします。異なる RAGFlow エディションの説明については、以下の表を参照してください。v0.17.1-slim とは異なるエディションをダウンロードするには、docker/.env ファイルの RAGFLOW_IMAGE 変数を適宜更新し、docker compose を使用してサーバーを起動してください。例えば、完全版 v0.17.1 をダウンロードするには、RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.1 と設定します。
+
+   ```bash
+   $ cd ragflow/docker
+   $ docker compose -f docker-compose.yml up -d
+>>>>>>> be730d39 (init commit)
    ```
 
    | RAGFlow image tag | Image size (GB) | Has embedding models? | Stable?                  |
    | ----------------- | --------------- | --------------------- | ------------------------ |
+<<<<<<< HEAD
    | v0.17.2           | &approx;9       | :heavy_check_mark:    | Stable release           |
    | v0.17.2-slim      | &approx;2       | ❌                    | Stable release           |
+=======
+   | v0.17.1           | &approx;9       | :heavy_check_mark:    | Stable release           |
+   | v0.17.1-slim      | &approx;2       | ❌                    | Stable release           |
+>>>>>>> be730d39 (init commit)
    | nightly           | &approx;9       | :heavy_check_mark:    | _Unstable_ nightly build |
    | nightly-slim      | &approx;2       | ❌                     | _Unstable_ nightly build |
 

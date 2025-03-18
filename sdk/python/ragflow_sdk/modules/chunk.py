@@ -16,12 +16,15 @@
 
 from .base import Base
 
+<<<<<<< HEAD
 class ChunkUpdateError(Exception):
     def __init__(self, code=None, message=None, details=None):
         self.code = code
         self.message = message
         self.details = details
         super().__init__(message)
+=======
+>>>>>>> be730d39 (init commit)
 
 class Chunk(Base):
     def __init__(self, rag, res_dict):
@@ -44,8 +47,12 @@ class Chunk(Base):
         res = self.put(f"/datasets/{self.dataset_id}/documents/{self.document_id}/chunks/{self.id}", update_message)
         res = res.json()
         if res.get("code") != 0:
+<<<<<<< HEAD
             raise ChunkUpdateError(
                 code=res.get("code"),
                 message=res.get("message"),
                 details=res.get("details")
             )
+=======
+            raise Exception(res["message"])
+>>>>>>> be730d39 (init commit)

@@ -429,7 +429,11 @@ class ComponentBase(ABC):
         if not isinstance(o, partial):
             if not isinstance(o, pd.DataFrame):
                 if isinstance(o, list):
+<<<<<<< HEAD
                     return self._param.output_var_name, pd.DataFrame(o).dropna()
+=======
+                    return self._param.output_var_name, pd.DataFrame(o)
+>>>>>>> be730d39 (init commit)
                 if o is None:
                     return self._param.output_var_name, pd.DataFrame()
                 return self._param.output_var_name, pd.DataFrame([{"content": str(o)}])
@@ -437,15 +441,25 @@ class ComponentBase(ABC):
 
         if allow_partial or not isinstance(o, partial):
             if not isinstance(o, partial) and not isinstance(o, pd.DataFrame):
+<<<<<<< HEAD
                 return pd.DataFrame(o if isinstance(o, list) else [o]).dropna()
+=======
+                return pd.DataFrame(o if isinstance(o, list) else [o])
+>>>>>>> be730d39 (init commit)
             return self._param.output_var_name, o
 
         outs = None
         for oo in o():
             if not isinstance(oo, pd.DataFrame):
+<<<<<<< HEAD
                 outs = pd.DataFrame(oo if isinstance(oo, list) else [oo]).dropna()
             else:
                 outs = oo.dropna()
+=======
+                outs = pd.DataFrame(oo if isinstance(oo, list) else [oo])
+            else:
+                outs = oo
+>>>>>>> be730d39 (init commit)
         return self._param.output_var_name, outs
 
     def reset(self):
@@ -484,7 +498,11 @@ class ComponentBase(ABC):
                     if q["component_id"].lower().find("answer") == 0:
                         txt = []
                         for r, c in self._canvas.history[::-1][:self._param.message_history_window_size][::-1]:
+<<<<<<< HEAD
                             txt.append(f"{r.upper()}:{c}")
+=======
+                            txt.append(f"{r.upper()}: {c}")
+>>>>>>> be730d39 (init commit)
                         txt = "\n".join(txt)
                         self._param.inputs.append({"content": txt, "component_id": q["component_id"]})
                         outs.append(pd.DataFrame([{"content": txt}]))
@@ -545,7 +563,11 @@ class ComponentBase(ABC):
         return df
 
     def get_input_elements(self):
+<<<<<<< HEAD
         assert self._param.query, "Please verify the input parameters first."
+=======
+        assert self._param.query, "Please identify input parameters firstly."
+>>>>>>> be730d39 (init commit)
         eles = []
         for q in self._param.query:
             if q.get("component_id"):

@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { SwitchFormField } from './switch-fom-field';
 
 type IProps = {
+<<<<<<< HEAD
   filedName: string[] | string;
+=======
+  filedName: string[];
+>>>>>>> be730d39 (init commit)
 };
 
 export function UseKnowledgeGraphItem({ filedName }: IProps) {

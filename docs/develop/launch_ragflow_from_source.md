@@ -91,6 +91,7 @@ docker compose -f docker/docker-compose-base.yml up -d
    export HF_ENDPOINT=https://hf-mirror.com
    ```
 
+<<<<<<< HEAD
 4. Check the configuration in **conf/service_conf.yaml**, ensuring all hosts and ports are correctly set.
    
 5. Run the **entrypoint.sh** script to launch the backend service:
@@ -101,6 +102,12 @@ docker compose -f docker/docker-compose-base.yml up -d
    ```
    ```shell
    python api/ragflow_server.py;
+=======
+4. Run the **entrypoint.sh** script to launch the backend service:
+
+   ```
+   bash docker/entrypoint.sh
+>>>>>>> be730d39 (init commit)
    ```
 
 ### Launch the RAGFlow frontend service

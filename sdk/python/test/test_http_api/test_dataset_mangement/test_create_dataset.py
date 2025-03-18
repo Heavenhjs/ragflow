@@ -13,12 +13,20 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+<<<<<<< HEAD
+=======
+import base64
+from pathlib import Path
+>>>>>>> be730d39 (init commit)
 
 import pytest
 from common import DATASET_NAME_LIMIT, INVALID_API_TOKEN, create_dataset
 from libs.auth import RAGFlowHttpApiAuth
+<<<<<<< HEAD
 from libs.utils import encode_avatar
 from libs.utils.file_utils import create_image_file
+=======
+>>>>>>> be730d39 (init commit)
 
 
 class TestAuthorization:
@@ -75,11 +83,26 @@ class TestDatasetCreation:
 
 
 class TestAdvancedConfigurations:
+<<<<<<< HEAD
     def test_avatar(self, get_http_api_auth, tmp_path):
         fn = create_image_file(tmp_path / "ragflow_test.png")
         payload = {
             "name": "avatar_test",
             "avatar": encode_avatar(fn),
+=======
+    def test_avatar(self, get_http_api_auth, request):
+        def encode_avatar(image_path):
+            with Path.open(image_path, "rb") as file:
+                binary_data = file.read()
+            base64_encoded = base64.b64encode(binary_data).decode("utf-8")
+            return base64_encoded
+
+        payload = {
+            "name": "avatar_test",
+            "avatar": encode_avatar(
+                Path(request.config.rootdir) / "test/data/logo.svg"
+            ),
+>>>>>>> be730d39 (init commit)
         }
         res = create_dataset(get_http_api_auth, payload)
         assert res["code"] == 0

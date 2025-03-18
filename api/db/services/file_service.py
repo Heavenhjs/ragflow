@@ -34,13 +34,17 @@ from rag.utils.storage_factory import STORAGE_IMPL
 
 
 class FileService(CommonService):
+<<<<<<< HEAD
     # Service class for managing file operations and storage
+=======
+>>>>>>> be730d39 (init commit)
     model = File
 
     @classmethod
     @DB.connection_context()
     def get_by_pf_id(cls, tenant_id, pf_id, page_number, items_per_page,
                      orderby, desc, keywords):
+<<<<<<< HEAD
         # Get files by parent folder ID with pagination and filtering
         # Args:
         #     tenant_id: ID of the tenant
@@ -52,6 +56,8 @@ class FileService(CommonService):
         #     keywords: Search keywords
         # Returns:
         #     Tuple of (file_list, total_count)
+=======
+>>>>>>> be730d39 (init commit)
         if keywords:
             files = cls.model.select().where(
                 (cls.model.tenant_id == tenant_id),
@@ -92,11 +98,14 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_kb_id_by_file_id(cls, file_id):
+<<<<<<< HEAD
         # Get knowledge base IDs associated with a file
         # Args:
         #     file_id: File ID
         # Returns:
         #     List of dictionaries containing knowledge base IDs and names
+=======
+>>>>>>> be730d39 (init commit)
         kbs = (cls.model.select(*[Knowledgebase.id, Knowledgebase.name])
                .join(File2Document, on=(File2Document.file_id == file_id))
                .join(Document, on=(File2Document.document_id == Document.id))
@@ -112,12 +121,15 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_by_pf_id_name(cls, id, name):
+<<<<<<< HEAD
         # Get file by parent folder ID and name
         # Args:
         #     id: Parent folder ID
         #     name: File name
         # Returns:
         #     File object or None if not found
+=======
+>>>>>>> be730d39 (init commit)
         file = cls.model.select().where((cls.model.parent_id == id) & (cls.model.name == name))
         if file.count():
             e, file = cls.get_by_id(file[0].id)
@@ -129,6 +141,7 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_id_list_by_id(cls, id, name, count, res):
+<<<<<<< HEAD
         # Recursively get list of file IDs by traversing folder structure
         # Args:
         #     id: Starting folder ID
@@ -137,6 +150,8 @@ class FileService(CommonService):
         #     res: List to store results
         # Returns:
         #     List of file IDs
+=======
+>>>>>>> be730d39 (init commit)
         if count < len(name):
             file = cls.get_by_pf_id_name(id, name[count])
             if file:
@@ -150,12 +165,15 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_all_innermost_file_ids(cls, folder_id, result_ids):
+<<<<<<< HEAD
         # Get IDs of all files in the deepest level of folders
         # Args:
         #     folder_id: Starting folder ID
         #     result_ids: List to store results
         # Returns:
         #     List of file IDs
+=======
+>>>>>>> be730d39 (init commit)
         subfolders = cls.model.select().where(cls.model.parent_id == folder_id)
         if subfolders.exists():
             for subfolder in subfolders:
@@ -167,6 +185,7 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def create_folder(cls, file, parent_id, name, count):
+<<<<<<< HEAD
         # Recursively create folder structure
         # Args:
         #     file: Current file object
@@ -175,6 +194,8 @@ class FileService(CommonService):
         #     count: Current depth in creation
         # Returns:
         #     Created file object
+=======
+>>>>>>> be730d39 (init commit)
         if count > len(name) - 2:
             return file
         else:
@@ -193,11 +214,14 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def is_parent_folder_exist(cls, parent_id):
+<<<<<<< HEAD
         # Check if parent folder exists
         # Args:
         #     parent_id: Parent folder ID
         # Returns:
         #     Boolean indicating if folder exists
+=======
+>>>>>>> be730d39 (init commit)
         parent_files = cls.model.select().where(cls.model.id == parent_id)
         if parent_files.count():
             return True
@@ -207,11 +231,14 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_root_folder(cls, tenant_id):
+<<<<<<< HEAD
         # Get or create root folder for tenant
         # Args:
         #     tenant_id: Tenant ID
         # Returns:
         #     Root folder dictionary
+=======
+>>>>>>> be730d39 (init commit)
         for file in cls.model.select().where((cls.model.tenant_id == tenant_id),
                                         (cls.model.parent_id == cls.model.id)
                                         ):
@@ -234,11 +261,14 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_kb_folder(cls, tenant_id):
+<<<<<<< HEAD
         # Get knowledge base folder for tenant
         # Args:
         #     tenant_id: Tenant ID
         # Returns:
         #     Knowledge base folder dictionary
+=======
+>>>>>>> be730d39 (init commit)
         for root in cls.model.select().where(
                 (cls.model.tenant_id == tenant_id), (cls.model.parent_id == cls.model.id)):
             for folder in cls.model.select().where(
@@ -250,6 +280,7 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def new_a_file_from_kb(cls, tenant_id, name, parent_id, ty=FileType.FOLDER.value, size=0, location=""):
+<<<<<<< HEAD
         # Create a new file from knowledge base
         # Args:
         #     tenant_id: Tenant ID
@@ -260,6 +291,8 @@ class FileService(CommonService):
         #     location: File location
         # Returns:
         #     Created file dictionary
+=======
+>>>>>>> be730d39 (init commit)
         for file in cls.query(tenant_id=tenant_id, parent_id=parent_id, name=name):
             return file.to_dict()
         file = {
@@ -279,10 +312,13 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def init_knowledgebase_docs(cls, root_id, tenant_id):
+<<<<<<< HEAD
         # Initialize knowledge base documents
         # Args:
         #     root_id: Root folder ID
         #     tenant_id: Tenant ID
+=======
+>>>>>>> be730d39 (init commit)
         for _ in cls.model.select().where((cls.model.name == KNOWLEDGEBASE_FOLDER_NAME)\
                                           & (cls.model.parent_id == root_id)):
             return
@@ -296,11 +332,14 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_parent_folder(cls, file_id):
+<<<<<<< HEAD
         # Get parent folder of a file
         # Args:
         #     file_id: File ID
         # Returns:
         #     Parent folder object
+=======
+>>>>>>> be730d39 (init commit)
         file = cls.model.select().where(cls.model.id == file_id)
         if file.count():
             e, file = cls.get_by_id(file[0].parent_id)
@@ -313,11 +352,14 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_all_parent_folders(cls, start_id):
+<<<<<<< HEAD
         # Get all parent folders in path
         # Args:
         #     start_id: Starting file ID
         # Returns:
         #     List of parent folder objects
+=======
+>>>>>>> be730d39 (init commit)
         parent_folders = []
         current_id = start_id
         while current_id:
@@ -333,11 +375,14 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def insert(cls, file):
+<<<<<<< HEAD
         # Insert a new file record
         # Args:
         #     file: File data dictionary
         # Returns:
         #     Created file object
+=======
+>>>>>>> be730d39 (init commit)
         if not cls.save(**file):
             raise RuntimeError("Database error (File)!")
         return File(**file)
@@ -345,7 +390,10 @@ class FileService(CommonService):
     @classmethod
     @DB.connection_context()
     def delete(cls, file):
+<<<<<<< HEAD
         #
+=======
+>>>>>>> be730d39 (init commit)
         return cls.delete_by_id(file.id)
 
     @classmethod

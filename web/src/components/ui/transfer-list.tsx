@@ -8,14 +8,21 @@ import {
   SquareCheckIcon,
   SquareIcon,
 } from 'lucide-react';
+<<<<<<< HEAD
 import React, { memo, useCallback, useEffect } from 'react';
 
 export type TransferListItemType = {
+=======
+import React from 'react';
+
+type Item = {
+>>>>>>> be730d39 (init commit)
   key: string;
   label: string;
   selected?: boolean;
 };
 
+<<<<<<< HEAD
 type TransferListProps = {
   items: TransferListItemType[];
   targetKeys?: string[];
@@ -83,6 +90,40 @@ export const TransferList = memo(function ({
     );
     setRightList(rightItems);
   }, [items, targetKeys]);
+=======
+export default function TransferList({ items }: { items: Item[] }) {
+  const [leftList, setLeftList] = React.useState<Item[]>(items);
+  const [rightList, setRightList] = React.useState<Item[]>([]);
+  const [leftSearch, setLeftSearch] = React.useState('');
+  const [rightSearch, setRightSearch] = React.useState('');
+
+  const moveToRight = () => {
+    const selectedItems = leftList.filter((item) => item.selected);
+    setRightList([...rightList, ...selectedItems]);
+    setLeftList(leftList.filter((item) => !item.selected));
+  };
+
+  const moveToLeft = () => {
+    const selectedItems = rightList.filter((item) => item.selected);
+    setLeftList([...leftList, ...selectedItems]);
+    setRightList(rightList.filter((item) => !item.selected));
+  };
+
+  const toggleSelection = (
+    list: Item[],
+    setList: React.Dispatch<React.SetStateAction<Item[]>>,
+    key: string,
+  ) => {
+    const updatedList = list.map((item) => {
+      if (item.key === key) {
+        return { ...item, selected: !item.selected };
+      }
+      return item;
+    });
+
+    setList(updatedList);
+  };
+>>>>>>> be730d39 (init commit)
 
   return (
     <div className="flex space-x-4">
@@ -179,6 +220,10 @@ export const TransferList = memo(function ({
       </div>
     </div>
   );
+<<<<<<< HEAD
 });
 
 TransferList.displayName = 'TransferList';
+=======
+}
+>>>>>>> be730d39 (init commit)

@@ -97,8 +97,13 @@ The [.env](https://github.com/infiniflow/ragflow/blob/main/docker/.env) file con
 - `RAGFLOW-IMAGE`  
   The Docker image edition. Available editions:  
   
+<<<<<<< HEAD
   - `infiniflow/ragflow:v0.17.2-slim` (default): The RAGFlow Docker image without embedding models.  
   - `infiniflow/ragflow:v0.17.2`: The RAGFlow Docker image with embedding models including:
+=======
+  - `infiniflow/ragflow:v0.17.1-slim` (default): The RAGFlow Docker image without embedding models.  
+  - `infiniflow/ragflow:v0.17.1`: The RAGFlow Docker image with embedding models including:
+>>>>>>> be730d39 (init commit)
     - Built-in embedding models:
       - `BAAI/bge-large-zh-v1.5` 
       - `BAAI/bge-reranker-v2-m3`

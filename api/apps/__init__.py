@@ -83,7 +83,11 @@ app.errorhandler(Exception)(server_error_response)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["MAX_CONTENT_LENGTH"] = int(
+<<<<<<< HEAD
     os.environ.get("MAX_CONTENT_LENGTH", 1024 * 1024 * 1024)
+=======
+    os.environ.get("MAX_CONTENT_LENGTH", 128 * 1024 * 1024)
+>>>>>>> be730d39 (init commit)
 )
 
 Session(app)

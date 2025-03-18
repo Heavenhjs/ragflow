@@ -319,6 +319,7 @@ dataset.update({"embedding_model":"BAAI/bge-zh-v1.5", "chunk_method":"manual"})
 
 ---
 
+<<<<<<< HEAD
 ## Error Codes
 
 ---
@@ -336,6 +337,8 @@ dataset.update({"embedding_model":"BAAI/bge-zh-v1.5", "chunk_method":"manual"})
 
 ---
 
+=======
+>>>>>>> be730d39 (init commit)
 ## FILE MANAGEMENT WITHIN DATASET
 
 ---
@@ -1736,6 +1739,10 @@ for agent in rag_object.list_agents():
     print(agent)
 ```
 
+<<<<<<< HEAD
 ---
 
 
+=======
+---
+>>>>>>> be730d39 (init commit)

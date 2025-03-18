@@ -22,6 +22,7 @@ from api.utils import datetime_format, current_timestamp, get_uuid
 
 
 class CommonService:
+<<<<<<< HEAD
     """Base service class that provides common database operations.
     
     This class serves as a foundation for all service classes in the application,
@@ -32,11 +33,14 @@ class CommonService:
     Attributes:
         model: The Peewee model class that this service operates on. Must be set by subclasses.
     """
+=======
+>>>>>>> be730d39 (init commit)
     model = None
 
     @classmethod
     @DB.connection_context()
     def query(cls, cols=None, reverse=None, order_by=None, **kwargs):
+<<<<<<< HEAD
         """Execute a database query with optional column selection and ordering.
     
         This method provides a flexible way to query the database with various filters
@@ -52,12 +56,15 @@ class CommonService:
         Returns:
             peewee.ModelSelect: A query result containing matching records.
         """
+=======
+>>>>>>> be730d39 (init commit)
         return cls.model.query(cols=cols, reverse=reverse,
                                order_by=order_by, **kwargs)
 
     @classmethod
     @DB.connection_context()
     def get_all(cls, cols=None, reverse=None, order_by=None):
+<<<<<<< HEAD
         """Retrieve all records from the database with optional column selection and ordering.
     
         This method fetches all records from the model's table with support for
@@ -72,6 +79,8 @@ class CommonService:
         Returns:
             peewee.ModelSelect: A query containing all matching records.
         """
+=======
+>>>>>>> be730d39 (init commit)
         if cols:
             query_records = cls.model.select(*cols)
         else:
@@ -90,6 +99,7 @@ class CommonService:
     @classmethod
     @DB.connection_context()
     def get(cls, **kwargs):
+<<<<<<< HEAD
         """Get a single record matching the given criteria.
     
         This method retrieves a single record from the database that matches
@@ -104,11 +114,14 @@ class CommonService:
         Raises:
             peewee.DoesNotExist: If no matching record is found.
         """
+=======
+>>>>>>> be730d39 (init commit)
         return cls.model.get(**kwargs)
 
     @classmethod
     @DB.connection_context()
     def get_or_none(cls, **kwargs):
+<<<<<<< HEAD
         """Get a single record or None if not found.
     
         This method attempts to retrieve a single record matching the given criteria,
@@ -120,6 +133,8 @@ class CommonService:
         Returns:
             Model instance or None: Matching record if found, None otherwise.
         """
+=======
+>>>>>>> be730d39 (init commit)
         try:
             return cls.model.get(**kwargs)
         except peewee.DoesNotExist:
@@ -128,6 +143,7 @@ class CommonService:
     @classmethod
     @DB.connection_context()
     def save(cls, **kwargs):
+<<<<<<< HEAD
         """Save a new record to database.
     
         This method creates a new record in the database with the provided field values,
@@ -139,12 +155,17 @@ class CommonService:
         Returns:
             Model instance: The created record object.
         """
+=======
+        # if "id" not in kwargs:
+        #    kwargs["id"] = get_uuid()
+>>>>>>> be730d39 (init commit)
         sample_obj = cls.model(**kwargs).save(force_insert=True)
         return sample_obj
 
     @classmethod
     @DB.connection_context()
     def insert(cls, **kwargs):
+<<<<<<< HEAD
         """Insert a new record with automatic ID and timestamps.
     
         This method creates a new record with automatically generated ID and timestamp fields.
@@ -156,6 +177,8 @@ class CommonService:
         Returns:
             Model instance: The newly created record object.
         """
+=======
+>>>>>>> be730d39 (init commit)
         if "id" not in kwargs:
             kwargs["id"] = get_uuid()
         kwargs["create_time"] = current_timestamp()
@@ -168,6 +191,7 @@ class CommonService:
     @classmethod
     @DB.connection_context()
     def insert_many(cls, data_list, batch_size=100):
+<<<<<<< HEAD
         """Insert multiple records in batches.
     
         This method efficiently inserts multiple records into the database using batch processing.
@@ -177,6 +201,8 @@ class CommonService:
             data_list (list): List of dictionaries containing record data to insert.
             batch_size (int, optional): Number of records to insert in each batch. Defaults to 100.
         """
+=======
+>>>>>>> be730d39 (init commit)
         with DB.atomic():
             for d in data_list:
                 d["create_time"] = current_timestamp()
@@ -187,6 +213,7 @@ class CommonService:
     @classmethod
     @DB.connection_context()
     def update_many_by_id(cls, data_list):
+<<<<<<< HEAD
         """Update multiple records by their IDs.
     
         This method updates multiple records in the database, identified by their IDs.
@@ -196,6 +223,8 @@ class CommonService:
             data_list (list): List of dictionaries containing record data to update.
                              Each dictionary must include an 'id' field.
         """
+=======
+>>>>>>> be730d39 (init commit)
         with DB.atomic():
             for data in data_list:
                 data["update_time"] = current_timestamp()
@@ -206,12 +235,15 @@ class CommonService:
     @classmethod
     @DB.connection_context()
     def update_by_id(cls, pid, data):
+<<<<<<< HEAD
         # Update a single record by ID
         # Args:
         #     pid: Record ID
         #     data: Updated field values
         # Returns:
         #     Number of records updated
+=======
+>>>>>>> be730d39 (init commit)
         data["update_time"] = current_timestamp()
         data["update_date"] = datetime_format(datetime.now())
         num = cls.model.update(data).where(cls.model.id == pid).execute()
@@ -220,11 +252,14 @@ class CommonService:
     @classmethod
     @DB.connection_context()
     def get_by_id(cls, pid):
+<<<<<<< HEAD
         # Get a record by ID
         # Args:
         #     pid: Record ID
         # Returns:
         #     Tuple of (success, record)
+=======
+>>>>>>> be730d39 (init commit)
         try:
             obj = cls.model.query(id=pid)[0]
             return True, obj
@@ -234,12 +269,15 @@ class CommonService:
     @classmethod
     @DB.connection_context()
     def get_by_ids(cls, pids, cols=None):
+<<<<<<< HEAD
         # Get multiple records by their IDs
         # Args:
         #     pids: List of record IDs
         #     cols: List of columns to select
         # Returns:
         #     Query of matching records
+=======
+>>>>>>> be730d39 (init commit)
         if cols:
             objs = cls.model.select(*cols)
         else:
@@ -249,21 +287,27 @@ class CommonService:
     @classmethod
     @DB.connection_context()
     def delete_by_id(cls, pid):
+<<<<<<< HEAD
         # Delete a record by ID
         # Args:
         #     pid: Record ID
         # Returns:
         #     Number of records deleted
+=======
+>>>>>>> be730d39 (init commit)
         return cls.model.delete().where(cls.model.id == pid).execute()
 
     @classmethod
     @DB.connection_context()
     def filter_delete(cls, filters):
+<<<<<<< HEAD
         # Delete records matching given filters
         # Args:
         #     filters: List of filter conditions
         # Returns:
         #     Number of records deleted
+=======
+>>>>>>> be730d39 (init commit)
         with DB.atomic():
             num = cls.model.delete().where(*filters).execute()
             return num
@@ -271,23 +315,29 @@ class CommonService:
     @classmethod
     @DB.connection_context()
     def filter_update(cls, filters, update_data):
+<<<<<<< HEAD
         # Update records matching given filters
         # Args:
         #     filters: List of filter conditions
         #     update_data: Updated field values
         # Returns:
         #     Number of records updated
+=======
+>>>>>>> be730d39 (init commit)
         with DB.atomic():
             return cls.model.update(update_data).where(*filters).execute()
 
     @staticmethod
     def cut_list(tar_list, n):
+<<<<<<< HEAD
         # Split a list into chunks of size n
         # Args:
         #     tar_list: List to split
         #     n: Chunk size
         # Returns:
         #     List of tuples containing chunks
+=======
+>>>>>>> be730d39 (init commit)
         length = len(tar_list)
         arr = range(length)
         result = [tuple(tar_list[x:(x + n)]) for x in arr[::n]]
@@ -297,6 +347,7 @@ class CommonService:
     @DB.connection_context()
     def filter_scope_list(cls, in_key, in_filters_list,
                           filters=None, cols=None):
+<<<<<<< HEAD
         # Get records matching IN clause filters with optional column selection
         # Args:
         #     in_key: Field name for IN clause
@@ -305,6 +356,8 @@ class CommonService:
         #     cols: List of columns to select
         # Returns:
         #     List of matching records
+=======
+>>>>>>> be730d39 (init commit)
         in_filters_tuple_list = cls.cut_list(in_filters_list, 20)
         if not filters:
             filters = []

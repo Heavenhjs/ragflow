@@ -8,7 +8,11 @@ slug: /embed_agent_into_webpage
 You can use iframe to embed an agent into a third-party webpage.
 
 :::caution WARNING
+<<<<<<< HEAD
 If your agent's **Begin** component takes a variable, you *cannot* embed it into a webpage.
+=======
+If your agent's **Begin** component takes a key of **file** type (a **file** type variable), you *cannot* embed it into a webpage.
+>>>>>>> be730d39 (init commit)
 :::
 
 1. Before proceeding, you must [acquire an API key](../models/llm_api_key_setup.md); otherwise, an error message would appear.

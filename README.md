@@ -22,7 +22,11 @@
         <img alt="Static Badge" src="https://img.shields.io/badge/Online-Demo-4e6b99">
     </a>
     <a href="https://hub.docker.com/r/infiniflow/ragflow" target="_blank">
+<<<<<<< HEAD
         <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.2-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.2">
+=======
+        <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.1-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.1">
+>>>>>>> be730d39 (init commit)
     </a>
     <a href="https://github.com/infiniflow/ragflow/releases/latest">
         <img src="https://img.shields.io/github/v/release/infiniflow/ragflow?color=blue&label=Latest%20Release" alt="Latest Release">
@@ -178,6 +182,7 @@ releases! 🌟
 > All Docker images are built for x86 platforms. We don't currently offer Docker images for ARM64.
 > If you are on an ARM64 platform, follow [this guide](https://ragflow.io/docs/dev/build_docker_image) to build a Docker image compatible with your system.
 
+<<<<<<< HEAD
    > The command below downloads the `v0.17.2-slim` edition of the RAGFlow Docker image. See the following table for descriptions of different RAGFlow editions. To download a RAGFlow edition different from `v0.17.2-slim`, update the `RAGFLOW_IMAGE` variable accordingly in **docker/.env** before using `docker compose` to start the server. For example: set `RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.2` for the full edition `v0.17.2`.
 
    ```bash
@@ -187,12 +192,24 @@ releases! 🌟
 
    # To use GPU to accelerate embedding and DeepDoc tasks:
    # docker compose -f docker-compose-gpu.yml up -d
+=======
+   > The command below downloads the `v0.17.1-slim` edition of the RAGFlow Docker image. See the following table for descriptions of different RAGFlow editions. To download a RAGFlow edition different from `v0.17.1-slim`, update the `RAGFLOW_IMAGE` variable accordingly in **docker/.env** before using `docker compose` to start the server. For example: set `RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.1` for the full edition `v0.17.1`.
+
+   ```bash
+   $ cd ragflow/docker
+   $ docker compose -f docker-compose.yml up -d
+>>>>>>> be730d39 (init commit)
    ```
 
    | RAGFlow image tag | Image size (GB) | Has embedding models? | Stable?                  |
    |-------------------|-----------------|-----------------------|--------------------------|
+<<<<<<< HEAD
    | v0.17.2           | &approx;9       | :heavy_check_mark:    | Stable release           |
    | v0.17.2-slim      | &approx;2       | ❌                   | Stable release            |
+=======
+   | v0.17.1           | &approx;9       | :heavy_check_mark:    | Stable release           |
+   | v0.17.1-slim      | &approx;2       | ❌                   | Stable release            |
+>>>>>>> be730d39 (init commit)
    | nightly           | &approx;9       | :heavy_check_mark:    | _Unstable_ nightly build |
    | nightly-slim      | &approx;2       | ❌                   | _Unstable_ nightly build  |
 

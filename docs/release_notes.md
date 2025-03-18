@@ -7,6 +7,7 @@ slug: /release_notes
 
 Key features, improvements and bug fixes in the latest releases.
 
+<<<<<<< HEAD
 ## v0.17.2
 
 Released on March 13, 2025.
@@ -61,6 +62,8 @@ Released on March 11, 2025.
 
 [Use tag set](./guides/dataset/use_tag_sets.md)
 
+=======
+>>>>>>> be730d39 (init commit)
 ## v0.17.0
 
 Released on March 3, 2025.
@@ -74,7 +77,11 @@ Released on March 3, 2025.
 - Dataset: Adds a **Document parser** dropdown menu to dataset configurations. This includes a DeepDoc model option, which is time-consuming, a much faster **naive** option (plain text), which skips DLA (Document Layout Analysis), OCR (Optical Character Recognition), and TSR (Table Structure Recognition) tasks, and several currently *experimental* large model options.
 - Agent component: **(x)** or a forward slash `/` can be used to insert available keys (variables) in the system prompt field of the **Generate** or **Template** component.
 - Object storage: Supports using Aliyun OSS (Object Storage Service) as a file storage option.
+<<<<<<< HEAD
 - Models: Updates the supported model list for Tongyi-Qianwen (Qwen), adding DeepSeek-specific models; adds ModelScope as a model provider.
+=======
+- Models: Updates the supported model list for Tongyi-Qianwen, adding DeepSeek-specific models; adds ModelScope as a model provider.
+>>>>>>> be730d39 (init commit)
 - APIs: Document metadata can be updated through an API.
 
 The following diagram illustrates the workflow of RAGFlow's Deep Research:

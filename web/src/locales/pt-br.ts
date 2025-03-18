@@ -644,13 +644,21 @@ export default {
       uploadTitle:
         'Clique ou arraste o arquivo para esta área para fazer o upload',
       uploadDescription:
+<<<<<<< HEAD
         'O RAGFlow suporta o upload de arquivos de forma individual ou em lote. Para o RAGFlow implantado localmente: o limite total de tamanho de arquivo por upload é de 1GB, com um limite de upload em lote de 32 arquivos. Não há limite para o número total de arquivos por conta. Para o demo.ragflow.io: o limite total de tamanho de arquivo por upload é de 10MB, com cada arquivo não excedendo 10MB e um máximo de 128 arquivos por conta.',
+=======
+        'Suporta upload de um único arquivo ou múltiplos arquivos. É estritamente proibido o upload de dados da empresa ou outros arquivos proibidos.',
+>>>>>>> be730d39 (init commit)
       local: 'Uploads locais',
       s3: 'Uploads S3',
       preview: 'Pré-visualização',
       fileError: 'Erro no arquivo',
       uploadLimit:
+<<<<<<< HEAD
         'O RAGFlow suporta o upload de arquivos de forma individual ou em lote. Para o RAGFlow implantado localmente: o limite total de tamanho de arquivo por upload é de 1GB, com um limite de upload em lote de 32 arquivos. Não há limite para o número total de arquivos por conta. Para o demo.ragflow.io: o limite total de tamanho de arquivo por upload é de 10MB, com cada arquivo não excedendo 10MB e um máximo de 128 arquivos por conta.',
+=======
+        'O tamanho do arquivo não pode exceder 10M, e o número total de arquivos não pode exceder 128',
+>>>>>>> be730d39 (init commit)
       destinationFolder: 'Pasta de destino',
     },
     flow: {

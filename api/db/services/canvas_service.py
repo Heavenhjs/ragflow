@@ -86,9 +86,27 @@ def completion(tenant_id, agent_id, question, session_id=None, stream=True, **kw
             "dsl": cvs.dsl
         }
         API4ConversationService.save(**conv)
+<<<<<<< HEAD
 
         
         conv = API4Conversation(**conv)
+=======
+        if query:
+            yield "data:" + json.dumps({"code": 0,
+                                        "message": "",
+                                        "data": {
+                                            "session_id": session_id,
+                                            "answer": canvas.get_prologue(),
+                                            "reference": [],
+                                            "param": canvas.get_preset_param()
+                                        }
+                                        },
+                                       ensure_ascii=False) + "\n\n"
+            yield "data:" + json.dumps({"code": 0, "message": "", "data": True}, ensure_ascii=False) + "\n\n"
+            return
+        else:
+            conv = API4Conversation(**conv)
+>>>>>>> be730d39 (init commit)
     else:
         e, conv = API4ConversationService.get_by_id(session_id)
         assert e, "Session not found!"
@@ -118,7 +136,11 @@ def completion(tenant_id, agent_id, question, session_id=None, stream=True, **kw
                     continue
                 for k in ans.keys():
                     final_ans[k] = ans[k]
+<<<<<<< HEAD
                 ans = {"answer": ans["content"], "reference": ans.get("reference", []), "param": canvas.get_preset_param()}
+=======
+                ans = {"answer": ans["content"], "reference": ans.get("reference", [])}
+>>>>>>> be730d39 (init commit)
                 ans = structure_answer(conv, ans, message_id, session_id)
                 yield "data:" + json.dumps({"code": 0, "message": "", "data": ans},
                                            ensure_ascii=False) + "\n\n"
@@ -148,8 +170,16 @@ def completion(tenant_id, agent_id, question, session_id=None, stream=True, **kw
                 canvas.reference.append(final_ans["reference"])
             conv.dsl = json.loads(str(canvas))
 
+<<<<<<< HEAD
             result = {"answer": final_ans["content"], "reference": final_ans.get("reference", []) , "param": canvas.get_preset_param()}
             result = structure_answer(conv, result, message_id, session_id)
             API4ConversationService.append_message(conv.id, conv.to_dict())
             yield result
             break
+=======
+            result = {"answer": final_ans["content"], "reference": final_ans.get("reference", [])}
+            result = structure_answer(conv, result, message_id, session_id)
+            API4ConversationService.append_message(conv.id, conv.to_dict())
+            yield result
+            break
+>>>>>>> be730d39 (init commit)

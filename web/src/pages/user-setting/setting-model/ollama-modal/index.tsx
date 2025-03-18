@@ -20,7 +20,11 @@ const { Option } = Select;
 
 const llmFactoryToUrlMap = {
   [LLMFactory.Ollama]:
+<<<<<<< HEAD
     'https://github.com/infiniflow/ragflow/blob/main/docs/guides/models/deploy_local_llm.mdx',
+=======
+    'https://github.com/infiniflow/ragflow/blob/main/docs/guides/deploy_local_llm.mdx',
+>>>>>>> be730d39 (init commit)
   [LLMFactory.Xinference]:
     'https://inference.readthedocs.io/en/latest/user_guide',
   [LLMFactory.ModelScope]:
@@ -69,7 +73,11 @@ const OllamaModal = ({
   };
   const url =
     llmFactoryToUrlMap[llmFactory as LlmFactory] ||
+<<<<<<< HEAD
     'https://github.com/infiniflow/ragflow/blob/main/docs/guides/models/deploy_local_llm.mdx';
+=======
+    'https://github.com/infiniflow/ragflow/blob/main/docs/guides/deploy_local_llm.mdx';
+>>>>>>> be730d39 (init commit)
   const optionsMap = {
     [LLMFactory.HuggingFace]: [
       { value: 'embedding', label: 'embedding' },

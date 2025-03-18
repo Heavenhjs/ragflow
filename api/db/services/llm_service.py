@@ -13,11 +13,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+<<<<<<< HEAD
 import logging
 
 from api.db.services.user_service import TenantService
 from rag.llm import EmbeddingModel, CvModel, ChatModel, RerankModel, Seq2txtModel, TTSModel
 from api import settings
+=======
+import json
+import logging
+import os
+
+from api.db.services.user_service import TenantService
+from api.utils.file_utils import get_project_base_directory
+from rag.llm import EmbeddingModel, CvModel, ChatModel, RerankModel, Seq2txtModel, TTSModel
+>>>>>>> be730d39 (init commit)
 from api.db import LLMType
 from api.db.db_models import DB
 from api.db.db_models import LLMFactories, LLM, TenantLLM
@@ -73,7 +83,11 @@ class TenantLLMService(CommonService):
 
         # model name must be xxx@yyy
         try:
+<<<<<<< HEAD
             model_factories = settings.FACTORY_LLM_INFOS
+=======
+            model_factories = json.load(open(os.path.join(get_project_base_directory(), "conf/llm_factories.json"), "r"))["factory_llm_infos"]
+>>>>>>> be730d39 (init commit)
             model_providers = set([f["name"] for f in model_factories])
             if arr[-1] not in model_providers:
                 return model_name, None

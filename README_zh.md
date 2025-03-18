@@ -22,7 +22,11 @@
         <img alt="Static Badge" src="https://img.shields.io/badge/Online-Demo-4e6b99">
     </a>
     <a href="https://hub.docker.com/r/infiniflow/ragflow" target="_blank">
+<<<<<<< HEAD
         <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.2-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.2">
+=======
+        <img src="https://img.shields.io/badge/docker_pull-ragflow:v0.17.1-brightgreen" alt="docker pull infiniflow/ragflow:v0.17.1">
+>>>>>>> be730d39 (init commit)
     </a>
     <a href="https://github.com/infiniflow/ragflow/releases/latest">
         <img src="https://img.shields.io/github/v/release/infiniflow/ragflow?color=blue&label=Latest%20Release" alt="Latest Release">
@@ -151,6 +155,7 @@
 > 请注意，目前官方提供的所有 Docker 镜像均基于 x86 架构构建，并不提供基于 ARM64 的 Docker 镜像。
 > 如果你的操作系统是 ARM64 架构，请参考[这篇文档](https://ragflow.io/docs/dev/build_docker_image)自行构建 Docker 镜像。
 
+<<<<<<< HEAD
    > 运行以下命令会自动下载 RAGFlow slim Docker 镜像 `v0.17.2-slim`。请参考下表查看不同 Docker 发行版的描述。如需下载不同于 `v0.17.2-slim` 的 Docker 镜像，请在运行 `docker compose` 启动服务之前先更新 **docker/.env** 文件内的 `RAGFLOW_IMAGE` 变量。比如，你可以通过设置 `RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.2` 来下载 RAGFlow 镜像的 `v0.17.2` 完整发行版。
 
    ```bash
@@ -160,12 +165,24 @@
 
    # To use GPU to accelerate embedding and DeepDoc tasks:
    # docker compose -f docker-compose-gpu.yml up -d
+=======
+   > 运行以下命令会自动下载 RAGFlow slim Docker 镜像 `v0.17.1-slim`。请参考下表查看不同 Docker 发行版的描述。如需下载不同于 `v0.17.1-slim` 的 Docker 镜像，请在运行 `docker compose` 启动服务之前先更新 **docker/.env** 文件内的 `RAGFLOW_IMAGE` 变量。比如，你可以通过设置 `RAGFLOW_IMAGE=infiniflow/ragflow:v0.17.1` 来下载 RAGFlow 镜像的 `v0.17.1` 完整发行版。
+
+   ```bash
+   $ cd ragflow/docker
+   $ docker compose -f docker-compose.yml up -d
+>>>>>>> be730d39 (init commit)
    ```
 
    | RAGFlow image tag | Image size (GB) | Has embedding models? | Stable?                  |
    | ----------------- | --------------- | --------------------- | ------------------------ |
+<<<<<<< HEAD
    | v0.17.2           | &approx;9       | :heavy_check_mark:    | Stable release           |
    | v0.17.2-slim      | &approx;2       | ❌                    | Stable release           |
+=======
+   | v0.17.1           | &approx;9       | :heavy_check_mark:    | Stable release           |
+   | v0.17.1-slim      | &approx;2       | ❌                    | Stable release           |
+>>>>>>> be730d39 (init commit)
    | nightly           | &approx;9       | :heavy_check_mark:    | _Unstable_ nightly build |
    | nightly-slim      | &approx;2       | ❌                     | _Unstable_ nightly build |
 

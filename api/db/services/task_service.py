@@ -28,7 +28,11 @@ from api.db.services.common_service import CommonService
 from api.db.services.document_service import DocumentService
 from api.utils import current_timestamp, get_uuid
 from deepdoc.parser.excel_parser import RAGFlowExcelParser
+<<<<<<< HEAD
 from rag.settings import get_svr_queue_name
+=======
+from rag.settings import SVR_QUEUE_NAME
+>>>>>>> be730d39 (init commit)
 from rag.utils.storage_factory import STORAGE_IMPL
 from rag.utils.redis_conn import REDIS_CONN
 from api import settings
@@ -36,12 +40,15 @@ from rag.nlp import search
 
 
 def trim_header_by_lines(text: str, max_length) -> str:
+<<<<<<< HEAD
     # Trim header text to maximum length while preserving line breaks
     # Args:
     #     text: Input text to trim
     #     max_length: Maximum allowed length
     # Returns:
     #     Trimmed text
+=======
+>>>>>>> be730d39 (init commit)
     len_text = len(text)
     if len_text <= max_length:
         return text
@@ -52,6 +59,7 @@ def trim_header_by_lines(text: str, max_length) -> str:
 
 
 class TaskService(CommonService):
+<<<<<<< HEAD
     """Service class for managing document processing tasks.
     
     This class extends CommonService to provide specialized functionality for document
@@ -65,11 +73,14 @@ class TaskService(CommonService):
     Attributes:
         model: The Task model class for database operations.
     """
+=======
+>>>>>>> be730d39 (init commit)
     model = Task
 
     @classmethod
     @DB.connection_context()
     def get_task(cls, task_id):
+<<<<<<< HEAD
         """Retrieve detailed task information by task ID.
     
         This method fetches comprehensive task details including associated document,
@@ -83,6 +94,8 @@ class TaskService(CommonService):
             dict: Task details dictionary containing all task information and related metadata.
                  Returns None if task is not found or has exceeded retry limit.
         """
+=======
+>>>>>>> be730d39 (init commit)
         fields = [
             cls.model.id,
             cls.model.doc_id,
@@ -137,6 +150,7 @@ class TaskService(CommonService):
     @classmethod
     @DB.connection_context()
     def get_tasks(cls, doc_id: str):
+<<<<<<< HEAD
         """Retrieve all tasks associated with a document.
     
         This method fetches all processing tasks for a given document, ordered by page
@@ -149,6 +163,8 @@ class TaskService(CommonService):
             list[dict]: List of task dictionaries containing task details.
                        Returns None if no tasks are found.
         """
+=======
+>>>>>>> be730d39 (init commit)
         fields = [
             cls.model.id,
             cls.model.from_page,
@@ -168,6 +184,7 @@ class TaskService(CommonService):
     @classmethod
     @DB.connection_context()
     def update_chunk_ids(cls, id: str, chunk_ids: str):
+<<<<<<< HEAD
         """Update the chunk IDs associated with a task.
     
         This method updates the chunk_ids field of a task, which stores the IDs of
@@ -177,11 +194,14 @@ class TaskService(CommonService):
             id (str): The unique identifier of the task.
             chunk_ids (str): Space-separated string of chunk identifiers.
         """
+=======
+>>>>>>> be730d39 (init commit)
         cls.model.update(chunk_ids=chunk_ids).where(cls.model.id == id).execute()
 
     @classmethod
     @DB.connection_context()
     def get_ongoing_doc_name(cls):
+<<<<<<< HEAD
         """Get names of documents that are currently being processed.
     
         This method retrieves information about documents that are in the processing state,
@@ -193,6 +213,8 @@ class TaskService(CommonService):
                         for documents currently being processed. Returns empty list if
                         no documents are being processed.
         """
+=======
+>>>>>>> be730d39 (init commit)
         with DB.lock("get_task", -1):
             docs = (
                 cls.model.select(
@@ -236,6 +258,7 @@ class TaskService(CommonService):
     @classmethod
     @DB.connection_context()
     def do_cancel(cls, id):
+<<<<<<< HEAD
         """Check if a task should be cancelled based on its document status.
     
         This method determines whether a task should be cancelled by checking the
@@ -248,6 +271,8 @@ class TaskService(CommonService):
         Returns:
             bool: True if the task should be cancelled, False otherwise.
         """
+=======
+>>>>>>> be730d39 (init commit)
         task = cls.model.get_by_id(id)
         _, doc = DocumentService.get_by_id(task.doc_id)
         return doc.run == TaskStatus.CANCEL.value or doc.progress < 0
@@ -255,6 +280,7 @@ class TaskService(CommonService):
     @classmethod
     @DB.connection_context()
     def update_progress(cls, id, info):
+<<<<<<< HEAD
         """Update the progress information for a task.
     
         This method updates both the progress message and completion percentage of a task.
@@ -267,6 +293,8 @@ class TaskService(CommonService):
                         - progress_msg (str, optional): Progress message to append
                         - progress (float, optional): Progress percentage (0.0 to 1.0)
         """
+=======
+>>>>>>> be730d39 (init commit)
         if os.environ.get("MACOS"):
             if info["progress_msg"]:
                 task = cls.model.get_by_id(id)
@@ -289,6 +317,7 @@ class TaskService(CommonService):
                 ).execute()
 
 
+<<<<<<< HEAD
 def queue_tasks(doc: dict, bucket: str, name: str, priority: int):
     """Create and queue document processing tasks.
     
@@ -309,6 +338,9 @@ def queue_tasks(doc: dict, bucket: str, name: str, priority: int):
         - Task digests are calculated for optimization and reuse
         - Previous task chunks may be reused if available
     """
+=======
+def queue_tasks(doc: dict, bucket: str, name: str):
+>>>>>>> be730d39 (init commit)
     def new_task():
         return {"id": get_uuid(), "doc_id": doc["id"], "progress": 0.0, "from_page": 0, "to_page": 100000000}
 
@@ -359,7 +391,10 @@ def queue_tasks(doc: dict, bucket: str, name: str, priority: int):
         task_digest = hasher.hexdigest()
         task["digest"] = task_digest
         task["progress"] = 0.0
+<<<<<<< HEAD
         task["priority"] = priority
+=======
+>>>>>>> be730d39 (init commit)
 
     prev_tasks = TaskService.get_tasks(doc["id"])
     ck_num = 0
@@ -382,11 +417,16 @@ def queue_tasks(doc: dict, bucket: str, name: str, priority: int):
     unfinished_task_array = [task for task in parse_task_array if task["progress"] < 1.0]
     for unfinished_task in unfinished_task_array:
         assert REDIS_CONN.queue_product(
+<<<<<<< HEAD
             get_svr_queue_name(priority), message=unfinished_task
+=======
+            SVR_QUEUE_NAME, message=unfinished_task
+>>>>>>> be730d39 (init commit)
         ), "Can't access Redis. Please check the Redis' status."
 
 
 def reuse_prev_task_chunks(task: dict, prev_tasks: list[dict], chunking_config: dict):
+<<<<<<< HEAD
     """Attempt to reuse chunks from previous tasks for optimization.
     
     This function checks if chunks from previously completed tasks can be reused for
@@ -407,6 +447,8 @@ def reuse_prev_task_chunks(task: dict, prev_tasks: list[dict], chunking_config: 
         - The previous task was completed successfully (progress = 1.0)
         - The previous task has valid chunk IDs
     """
+=======
+>>>>>>> be730d39 (init commit)
     idx = 0
     while idx < len(prev_tasks):
         prev_task = prev_tasks[idx]

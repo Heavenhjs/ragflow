@@ -304,6 +304,7 @@ def chat(dialog, messages, stream=True, **kwargs):
         retrieval_time_cost = (retrieval_ts - generate_keyword_ts) * 1000
         generate_result_time_cost = (finish_chat_ts - retrieval_ts) * 1000
 
+<<<<<<< HEAD
         tk_num = num_tokens_from_string(think+answer)
         prompt += "\n\n### Query:\n%s" % " ".join(questions)
         prompt = (
@@ -323,6 +324,10 @@ def chat(dialog, messages, stream=True, **kwargs):
                 f"  - Generated tokens(approximately): {tk_num}\n"
                 f"  - Token speed: {int(tk_num/(generate_result_time_cost/1000.))}/s"
         )
+=======
+        prompt += "\n\n### Query:\n%s" % " ".join(questions)
+        prompt = f"{prompt}\n\n - Total: {total_time_cost:.1f}ms\n  - Check LLM: {check_llm_time_cost:.1f}ms\n  - Create retriever: {create_retriever_time_cost:.1f}ms\n  - Bind embedding: {bind_embedding_time_cost:.1f}ms\n  - Bind LLM: {bind_llm_time_cost:.1f}ms\n  - Tune question: {refine_question_time_cost:.1f}ms\n  - Bind reranker: {bind_reranker_time_cost:.1f}ms\n  - Generate keyword: {generate_keyword_time_cost:.1f}ms\n  - Retrieval: {retrieval_time_cost:.1f}ms\n  - Generate answer: {generate_result_time_cost:.1f}ms"
+>>>>>>> be730d39 (init commit)
         return {"answer": think+answer, "reference": refs, "prompt": re.sub(r"\n", "  \n", prompt), "created_at": time.time()}
 
     if stream:

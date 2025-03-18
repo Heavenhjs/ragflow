@@ -118,8 +118,11 @@ class RagTokenizer:
 
     def dfs_(self, chars, s, preTks, tkslist):
         res = s
+<<<<<<< HEAD
         if len(tkslist) >= 2048:
             return res
+=======
+>>>>>>> be730d39 (init commit)
         # if s > MAX_L or s>= len(chars):
         if s >= len(chars):
             tkslist.append(preTks)
